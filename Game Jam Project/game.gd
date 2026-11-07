@@ -1,6 +1,13 @@
 extends Node2D
 
 signal xp
+signal upgrade_select(upgrade_name: String)
+
+@onready var buttons = [%Button1, %Button2, %Button3]
+
+func _ready() -> void:
+	for button in buttons:
+		button.pressed.connect(_on_button_pressed.bind(button.text))
 
 func spawn_mob():
 	%PathFollow2D.progress_ratio = randf()
@@ -26,6 +33,7 @@ func _on_player_upgraded() -> void:
 	get_tree().paused = true
 
 
-func _on_button_pressed() -> void:
+func _on_button_pressed(upgrade_name) -> void:
+	upgrade_select.emit(upgrade_name)
 	%UpgradeScreen.hide()
 	get_tree().paused = false

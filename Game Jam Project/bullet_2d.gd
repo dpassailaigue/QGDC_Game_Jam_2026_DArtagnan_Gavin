@@ -1,11 +1,16 @@
 extends Area2D
 
-var chain_length = 2
+static var chain_length = 2
 var chain = chain_length
 var travelled_distance = 0
 
+@onready var game = get_node("/root/Game")
+
+func _ready() -> void:
+	game.upgrade_select.connect(_on_upgrade_select)
 
 func _physics_process(delta):
+	print(chain_length)
 	const SPEED = 10000
 	const RANGE = 12000
 
@@ -35,3 +40,7 @@ func _on_body_entered(body):
 		find_enemy()
 	if body.has_method("take_damage"):
 		body.take_damage()
+
+static func _on_upgrade_select(upgrade_name):
+	if upgrade_name == "CHAIN":
+		chain_length += 1
