@@ -7,7 +7,7 @@
 radius = 15.0333
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e2vlj"]
-radius = 987.0
+radius = 500.0
 
 [node name="Bullet2D" type="Area2D" unique_id=336674534]
 top_level = true
