@@ -71,37 +71,37 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PineTree" parent="." unique_id=1536469701 instance=ExtResource("3_6h7ij")]
+[node name="PineTree" parent="." unique_id=1536469701 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(66, 591)
 
-[node name="PineTree2" parent="." unique_id=896816878 instance=ExtResource("3_6h7ij")]
+[node name="PineTree2" parent="." unique_id=896816878 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(155, 643)
 
-[node name="PineTree3" parent="." unique_id=466383871 instance=ExtResource("3_6h7ij")]
+[node name="PineTree3" parent="." unique_id=466383871 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(-9.99997, 687)
 
-[node name="PineTree4" parent="." unique_id=50880364 instance=ExtResource("3_6h7ij")]
+[node name="PineTree4" parent="." unique_id=50880364 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(682, 254)
 
-[node name="PineTree5" parent="." unique_id=1152293371 instance=ExtResource("3_6h7ij")]
+[node name="PineTree5" parent="." unique_id=1152293371 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(829, 384)
 
-[node name="PineTree11" parent="." unique_id=1342470195 instance=ExtResource("3_6h7ij")]
+[node name="PineTree11" parent="." unique_id=1342470195 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(781, -296)
 
-[node name="PineTree6" parent="." unique_id=658083171 instance=ExtResource("3_6h7ij")]
+[node name="PineTree6" parent="." unique_id=658083171 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(-677, 313)
 
-[node name="PineTree7" parent="." unique_id=767266513 instance=ExtResource("3_6h7ij")]
+[node name="PineTree7" parent="." unique_id=767266513 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(-788, 370)
 
-[node name="PineTree8" parent="." unique_id=1473712656 instance=ExtResource("3_6h7ij")]
+[node name="PineTree8" parent="." unique_id=1473712656 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(-829, 229)
 
-[node name="PineTree9" parent="." unique_id=2039282013 instance=ExtResource("3_6h7ij")]
+[node name="PineTree9" parent="." unique_id=2039282013 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(-346, -355)
 
-[node name="PineTree10" parent="." unique_id=1043826134 instance=ExtResource("3_6h7ij")]
+[node name="PineTree10" parent="." unique_id=1043826134 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(-573, -231)
 
 [node name="UpgradeScreen" type="CanvasLayer" parent="." unique_id=1191910023]
