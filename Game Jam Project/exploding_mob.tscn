@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dy830hhlyl0wa"]
+
+[ext_resource type="Script" uid="uid://i5nhc34lk1hy" path="res://exploding_mob.gd" id="1_1q3yt"]
+[ext_resource type="PackedScene" uid="uid://du6hgqxsqr8le" path="res://characters/slime/explodingSlime.tscn" id="2_1q3yt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ypitm"]
+radius = 67.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cobfd"]
+radius = 172.00291
+
+[node name="ExplodingMob" type="CharacterBody2D" unique_id=1758012314]
+collision_layer = 2
+script = ExtResource("1_1q3yt")
+
+[node name="ExplodingSlime" parent="." unique_id=972096811 instance=ExtResource("2_1q3yt")]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=469449182]
+position = Vector2(0, -28)
+shape = SubResource("CircleShape2D_ypitm")
+debug_color = Color(0.701961, 0.282353, 0.352941, 0.419608)
+
+[node name="Timer" type="Timer" parent="." unique_id=1664222107]
+wait_time = 2.0
+
+[node name="ExplosionArea" type="Area2D" parent="." unique_id=685007392]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea" unique_id=1058975657]
+position = Vector2(-2, -29)
+shape = SubResource("CircleShape2D_cobfd")
+debug_color = Color(0.96051425, 0.20152774, 3.85046e-07, 0.41960785)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="ExplosionArea" to="." method="_on_explosion_area_body_entered"]
