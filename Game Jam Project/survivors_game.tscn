@@ -10,11 +10,15 @@ _data = {
 }
 point_count = 5
 
-[sub_resource type="LabelSettings" id="LabelSettings_cobfd"]
-font_size = 48
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_menu_normal"]
 bg_color = Color(0.2, 0.65, 0.25, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_menu_pressed"]
+bg_color = Color(0.15, 0.5, 0.2, 1)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
@@ -27,12 +31,8 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_menu_pressed"]
-bg_color = Color(0.15, 0.5, 0.2, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
+[sub_resource type="LabelSettings" id="LabelSettings_cobfd"]
+font_size = 48
 
 [node name="Game" type="Node2D" unique_id=327747119]
 y_sort_enabled = true
@@ -82,7 +82,7 @@ text = "Game Over"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MainMenuButton" type="Button" parent="GameOver/ColorRect"]
+[node name="MainMenuButton" type="Button" parent="GameOver/ColorRect" unique_id=734082112]
 unique_name_in_owner = true
 process_mode = 3
 layout_mode = 1
@@ -99,8 +99,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 theme_override_styles/normal = SubResource("StyleBoxFlat_menu_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_menu_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_menu_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_menu_hover")
 theme_override_styles/focus = SubResource("StyleBoxFlat_menu_hover")
 text = "Back to main menu"
 

@@ -44,4 +44,4 @@ func _on_game_xp() -> void:
 
 func _on_game_upgrade_select(upgrade_name: String) -> void:
 	if upgrade_name == "SPEED":
-		speed += 200.0
+		speed += 50.0

@@ -107,7 +107,6 @@ func take_damage(amount: float):
 	if health <= 0:
 		die()
 
-
 func die():
 	dead = true
 	remove_from_group("mobs")

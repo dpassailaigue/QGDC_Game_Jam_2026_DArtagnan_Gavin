@@ -68,8 +68,12 @@ func _update_countdown_label() -> void:
 
 func spawn_mob(is_boss := false):
 	%PathFollow2D.progress_ratio = randf()
+<<<<<<< HEAD
 	var new_mob = preload("res://mob.tscn").instantiate()
 	new_mob.is_boss = is_boss
+=======
+	var new_mob = preload("res://exploding_mob.tscn").instantiate()
+>>>>>>> 0d2fb34f74184f271feadeb1eea430c5fe636dfa
 	new_mob.died.connect(_on_mob_died)
 	new_mob.global_position = %PathFollow2D.global_position
 	add_child(new_mob)
@@ -98,7 +102,6 @@ func _on_player_health_depleted():
 
 func _on_mob_died():
 	xp.emit()
-
 
 func _on_player_upgraded() -> void:
 	var options := ALL_UPGRADES.duplicate()
