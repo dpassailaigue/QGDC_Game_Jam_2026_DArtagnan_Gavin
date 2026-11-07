@@ -10,6 +10,9 @@ _data = {
 }
 point_count = 5
 
+[sub_resource type="LabelSettings" id="LabelSettings_cobfd"]
+font_size = 48
+
 [node name="Game" type="Node2D" unique_id=327747119]
 y_sort_enabled = true
 script = ExtResource("1_qclsr")
@@ -101,5 +104,55 @@ position = Vector2(-346, -355)
 [node name="PineTree10" parent="." unique_id=1043826134 instance=ExtResource("3_6h7ij")]
 position = Vector2(-573, -231)
 
+[node name="UpgradeScreen" type="CanvasLayer" parent="." unique_id=1191910023]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="UpgradeScreen" unique_id=60451961]
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 0.4392157)
+
+[node name="Button1" type="Button" parent="UpgradeScreen/ColorRect" unique_id=1960688322]
+process_mode = 3
+layout_mode = 0
+offset_left = 205.0
+offset_top = 377.0
+offset_right = 529.0
+offset_bottom = 795.0
+text = "DAMAGE"
+
+[node name="Button2" type="Button" parent="UpgradeScreen/ColorRect" unique_id=1897160357]
+process_mode = 3
+layout_mode = 0
+offset_left = 811.0
+offset_top = 370.0
+offset_right = 1135.0
+offset_bottom = 788.0
+text = "SPEED"
+
+[node name="Button3" type="Button" parent="UpgradeScreen/ColorRect" unique_id=1883198353]
+process_mode = 3
+layout_mode = 0
+offset_left = 1419.0
+offset_top = 370.0
+offset_right = 1743.0
+offset_bottom = 788.0
+text = "CHAIN"
+
+[node name="Label" type="Label" parent="UpgradeScreen/ColorRect" unique_id=1659296721]
+layout_mode = 0
+offset_left = 854.0
+offset_top = 172.0
+offset_right = 1135.0
+offset_bottom = 270.0
+text = "UPGRADES"
+label_settings = SubResource("LabelSettings_cobfd")
+
+[connection signal="xp" from="." to="Player" method="_on_game_xp"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
+[connection signal="upgraded" from="Player" to="." method="_on_player_upgraded"]
+[connection signal="pressed" from="UpgradeScreen/ColorRect/Button1" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="UpgradeScreen/ColorRect/Button2" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="UpgradeScreen/ColorRect/Button3" to="." method="_on_button_pressed"]

@@ -26,6 +26,7 @@ func take_damage():
 	if health == 0:
 		var smoke_scene = preload("res://smoke_explosion/smoke_explosion.tscn")
 		var smoke = smoke_scene.instantiate()
+		died.emit()
 		get_parent().add_child(smoke)
 		smoke.global_position = global_position
 		queue_free()
