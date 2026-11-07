@@ -1,14 +1,19 @@
 extends CharacterBody2D
 
 signal health_depleted
+signal upgraded
 
 var health = 100.0
+var xp = 0
+var upgrade_need = 4
+var level = 1
 
+var speed = 600.0
 
 func _physics_process(delta):
-	const SPEED = 600.0
+	%Label.text = str(xp)
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	velocity = direction * SPEED
+	velocity = direction * speed
 
 	move_and_slide()
 	
@@ -25,3 +30,18 @@ func _physics_process(delta):
 		%HealthBar.value = health
 		if health <= 0.0:
 			health_depleted.emit()
+
+func upgrade():
+	upgrade_need *= 2
+	level += 1
+	upgraded.emit()
+
+func _on_game_xp() -> void:
+	xp += 1
+	if xp >= upgrade_need:
+		upgrade()
+
+
+func _on_game_upgrade_select(upgrade_name: String) -> void:
+	if upgrade_name == "SPEED":
+		speed += 200.0

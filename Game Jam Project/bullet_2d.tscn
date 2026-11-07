@@ -6,6 +6,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_naqkr"]
 radius = 15.0333
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_e2vlj"]
+radius = 987.0
+
 [node name="Bullet2D" type="Area2D" unique_id=336674534]
 top_level = true
 collision_layer = 0
@@ -19,5 +22,13 @@ texture = ExtResource("2_q0pid")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1998346021]
 shape = SubResource("CircleShape2D_naqkr")
+
+[node name="EnemyScanner" type="Area2D" parent="." unique_id=820848750]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyScanner" unique_id=295698231]
+shape = SubResource("CircleShape2D_e2vlj")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
