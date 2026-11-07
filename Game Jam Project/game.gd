@@ -39,6 +39,7 @@ func _process(delta: float) -> void:
 	if time_left == 0.0:
 		$Timer.stop()
 		countdown_finished.emit()
+		spawn_boss()
 
 # Spawn rate ramps linearly from MIN to MAX over each minute, then resets.
 func _update_spawn_rate() -> void:
@@ -65,12 +66,24 @@ func _update_countdown_label() -> void:
 	var total := int(ceil(time_left))
 	countdown_label.text = "%d:%02d" % [floori(total / 60.0), total % 60]
 
-func spawn_mob():
+func spawn_mob(is_boss := false):
 	%PathFollow2D.progress_ratio = randf()
 	var new_mob = preload("res://mob.tscn").instantiate()
+	new_mob.is_boss = is_boss
 	new_mob.died.connect(_on_mob_died)
 	new_mob.global_position = %PathFollow2D.global_position
 	add_child(new_mob)
+	return new_mob
+
+func spawn_boss():
+	var boss = spawn_mob(true)
+	boss.died.connect(_on_boss_died)
+
+func _on_boss_died():
+	# The boss kill can also trigger a level-up; the win screen takes priority
+	%UpgradeScreen.hide()
+	%WinScreen.show()
+	get_tree().paused = true
 
 func _on_timer_timeout():
 	if time_left <= 0.0:
