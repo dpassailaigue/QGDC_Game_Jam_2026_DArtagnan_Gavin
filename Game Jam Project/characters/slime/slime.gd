@@ -2,9 +2,10 @@ extends Node2D
 
 @onready var player = get_node("/root/Game/Player")
 
-func _process(float) -> void:
-	if player.global_position.x < global_position.x:
-		$AnimatedSprite2D.flip_h = true
+# Face the player: flip when they're to the left, unflip when they're to the
+# right again (otherwise a mob stays flipped forever once the player passes it)
+func _process(_delta: float) -> void:
+	$AnimatedSprite2D.flip_h = player.global_position.x < global_position.x
 
 func play_walk():
 	%AnimationPlayer.play("walk")

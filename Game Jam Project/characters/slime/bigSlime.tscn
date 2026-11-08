@@ -229,5 +229,6 @@ unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_j6cum")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=243336713]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_cobfd")
 animation = &"walk"
