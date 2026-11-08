@@ -12,7 +12,7 @@ const FUSE_SPEED := 150.0
 
 
 func _init():
-	default_color = Color.RED
+	default_color = Color.WHITE
 	speed = randf_range(400, 500)
 
 
@@ -21,6 +21,7 @@ func _on_explosion_area_body_entered(body: Node2D) -> void:
 	if body == player and $Timer.is_stopped():
 		speed = FUSE_SPEED
 		$Timer.start()
+		slime.play_explosion()
 
 
 func _on_timer_timeout() -> void:

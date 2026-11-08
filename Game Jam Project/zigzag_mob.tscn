@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b3io1l75ksf32"]
 
 [ext_resource type="Script" uid="uid://1djce8fv8ltu" path="res://zigzag_mob.gd" id="1_nhsrx"]
-[ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://characters/slime/slime.tscn" id="2_nhsrx"]
+[ext_resource type="PackedScene" uid="uid://bwx84cdhdhs0c" path="res://characters/slime/zigzagSlime.tscn" id="2_nhsrx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ypitm"]
 radius = 67.0
@@ -12,6 +12,8 @@ script = ExtResource("1_nhsrx")
 
 [node name="Slime" parent="." unique_id=972096811 instance=ExtResource("2_nhsrx")]
 unique_name_in_owner = true
+position = Vector2(0, -58)
+scale = Vector2(3.5, 3.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=469449182]
 position = Vector2(0, -28)

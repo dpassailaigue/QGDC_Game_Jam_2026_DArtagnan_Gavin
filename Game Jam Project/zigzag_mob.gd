@@ -7,7 +7,7 @@ var offset = PI / 4
 
 
 func _init():
-	default_color = Color.BLUE
+	default_color = Color.WHITE
 
 
 func _get_move_direction() -> Vector2:

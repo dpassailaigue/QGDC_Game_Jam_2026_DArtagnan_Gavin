@@ -14,6 +14,7 @@ const BOSS_SCALE := 1.0
 const BOSS_HEALTH_MULTIPLIER := 250.0
 const TREE_CRUSH_RADIUS := 150.0
 var is_boss := true
+var is_locked := false
 
 # Status effects
 var burn_time_left := 0.0
@@ -140,6 +141,8 @@ func _start_aoe():
 	aoe_cooldown_timer = AOE_COOLDOWN
 	velocity = Vector2.ZERO
 	queue_redraw()
+	%BossSlime.play_attack()
+	is_locked = true
 
 func _execute_aoe():
 	var distance = global_position.distance_to(player.global_position)
@@ -148,6 +151,8 @@ func _execute_aoe():
 		# take_damage (not health -=) so the health bar updates and the
 		# player actually dies if this finishes them off
 		player.take_damage(AOE_DAMAGE)
+	
+	is_locked = false
 
 	_spawn_smoke(global_position)
 
@@ -222,7 +227,8 @@ func apply_hit_effects():
 func take_damage(amount: float):
 	if dead:
 		return
-	%BossSlime.play_hurt()
+	if not is_locked:
+		%BossSlime.play_hurt()
 	health -= amount
 
 	if health <= 0:
