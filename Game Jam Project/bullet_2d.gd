@@ -1,16 +1,26 @@
 extends Area2D
 
 const SPEED = 10000
-const RANGE = 12000
+# The bullet starts at the player (centre of the screen), and the screen corner is
+# ~1100px away, so missed shots vanish at the screen edge instead of flying
+# 12000px and hitting enemies far off-screen.
+const RANGE = 1100
 # Chain targets must be within the gun's range of the player, so chains stay on screen
 const MAX_TARGET_RANGE = preload("res://gun.gd").MAX_RANGE
 
 var travelled_distance = 0
-var hit_bodies := {} # bodies this bullet already hit, so nothing gets hit twice
+# Bodies this bullet already hit, so nothing gets hit twice. Stored as
+# instance IDs / RIDs, NOT the nodes themselves: a Dictionary keyed by nodes
+# that later get freed can hang or crash Godot when it's read again.
+var hit_ids := {}
+var ray_exclude: Array[RID] = []
 
 @onready var game = get_node("/root/Game")
 @onready var player = get_node("/root/Game/Player")
 @onready var chain = game.chain_length
+
+func _ready():
+	ray_exclude.append(player.get_rid())
 
 func _physics_process(delta):
 	var motion = Vector2.RIGHT.rotated(rotation) * SPEED * delta
@@ -30,11 +40,7 @@ func _physics_process(delta):
 
 func _sweep(from: Vector2, to: Vector2) -> Dictionary:
 	var query = PhysicsRayQueryParameters2D.create(from, to, collision_mask)
-	var exclude: Array[RID] = [player.get_rid()]
-	for body in hit_bodies:
-		if is_instance_valid(body):
-			exclude.append(body.get_rid())
-	query.exclude = exclude
+	query.exclude = ray_exclude
 	return get_world_2d().direct_space_state.intersect_ray(query)
 
 func find_enemy():
@@ -42,7 +48,7 @@ func find_enemy():
 	var closest_body = null
 	var min_distance = INF
 	for body in enemies_in_range:
-		if body in hit_bodies:
+		if hit_ids.has(body.get_instance_id()):
 			continue
 		if player.global_position.distance_to(body.global_position) > MAX_TARGET_RANGE:
 			continue
@@ -57,9 +63,10 @@ func _on_body_entered(body):
 	_hit(body)
 
 func _hit(body):
-	if body == player or body in hit_bodies or is_queued_for_deletion():
+	if body == player or hit_ids.has(body.get_instance_id()) or is_queued_for_deletion():
 		return
-	hit_bodies[body] = true
+	hit_ids[body.get_instance_id()] = true
+	ray_exclude.append(body.get_rid())
 	chain -= 1
 	if chain <= 0:
 		queue_free()

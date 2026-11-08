@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dy830hhlyl0wa"]
 
 [ext_resource type="Script" uid="uid://i5nhc34lk1hy" path="res://exploding_mob.gd" id="1_1q3yt"]
-[ext_resource type="PackedScene" uid="uid://du6hgqxsqr8le" path="res://characters/slime/explodingSlime.tscn" id="2_1q3yt"]
+[ext_resource type="PackedScene" uid="uid://ogik4s70pgwl" path="res://characters/slime/slime.tscn" id="2_1q3yt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ypitm"]
 radius = 67.0
@@ -13,7 +13,7 @@ radius = 172.00291
 collision_layer = 2
 script = ExtResource("1_1q3yt")
 
-[node name="ExplodingSlime" parent="." unique_id=972096811 instance=ExtResource("2_1q3yt")]
+[node name="Slime" parent="." unique_id=972096811 instance=ExtResource("2_1q3yt")]
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=469449182]

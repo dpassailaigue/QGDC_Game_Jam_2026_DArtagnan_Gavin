@@ -16,6 +16,16 @@ const ALL_UPGRADES := ["DAMAGE", "SPEED", "CHAIN", "FIRE", "EXPLODE", "SLOW"]
 
 var time_left := COUNTDOWN_DURATION
 var countdown_label: Label
+var shown_seconds := -1 # last whole second drawn on the countdown label
+
+var game_ended := false # set once the game-over or win screen is up
+var pending_upgrades := 0 # level-ups waiting to be picked
+
+# Max smoke effects spawned per frame, so a huge chain reaction doesn't
+# create hundreds of shader nodes at once
+const MAX_SMOKE_PER_FRAME := 12
+var smoke_this_frame := 0
+var explosion_shape := CircleShape2D.new()
 
 # Upgrade stats (SPEED lives on the player)
 var damage := 1.0
@@ -32,6 +42,7 @@ func _ready() -> void:
 	_update_spawn_rate()
 
 func _process(delta: float) -> void:
+	smoke_this_frame = 0
 	if time_left <= 0.0:
 		return
 	time_left = max(time_left - delta, 0.0)
@@ -64,46 +75,98 @@ func _create_countdown_label() -> void:
 
 func _update_countdown_label() -> void:
 	var total := int(ceil(time_left))
+	if total == shown_seconds:
+		return
+	shown_seconds = total
 	countdown_label.text = "%d:%02d" % [floori(total / 60.0), total % 60]
 
-func spawn_mob(is_boss := false):
+enum MobType { NORMAL, EMPOWERED, ZIGZAG, EXPLODING, BOSS }
+
+# Which enemies spawn in each minute of the countdown, as {type: weight}.
+# Weights are relative chances: normal/empowered slimes make up 80% of
+# spawns, special enemies (zigzag, exploding) the other 20%.
+const MINUTE_SPAWN_TABLE := [
+	{MobType.NORMAL: 8}, # 5:00 - 4:00
+	{MobType.NORMAL: 8, MobType.ZIGZAG: 2}, # 4:00 - 3:00
+	{MobType.NORMAL: 8, MobType.EXPLODING: 2}, # 3:00 - 2:00
+	{MobType.EMPOWERED: 8, MobType.ZIGZAG: 2}, # 2:00 - 1:00
+	{MobType.NORMAL: 3, MobType.EMPOWERED: 5, MobType.ZIGZAG: 1, MobType.EXPLODING: 1}, # 1:00 - 0:00
+]
+
+func spawn_mob(type: MobType):
+	const MOB = preload("res://mob.tscn")
+	const ZIGZAG_MOB = preload("res://zigzag_mob.tscn")
+	const EXPLODING_MOB = preload("res://exploding_mob.tscn")
+	var scene: PackedScene = MOB
+	match type:
+		MobType.ZIGZAG: scene = ZIGZAG_MOB
+		MobType.EXPLODING: scene = EXPLODING_MOB
+
 	%PathFollow2D.progress_ratio = randf()
-<<<<<<< HEAD
-	var new_mob = preload("res://mob.tscn").instantiate()
-	new_mob.is_boss = is_boss
-=======
-	var new_mob = preload("res://exploding_mob.tscn").instantiate()
->>>>>>> 0d2fb34f74184f271feadeb1eea430c5fe636dfa
+	var new_mob = scene.instantiate()
+	new_mob.is_boss = type == MobType.BOSS
+	new_mob.is_empowered = type == MobType.EMPOWERED
 	new_mob.died.connect(_on_mob_died)
 	new_mob.global_position = %PathFollow2D.global_position
 	add_child(new_mob)
 	return new_mob
 
+# Weighted random pick from the current minute's row of the spawn table
+func _pick_mob_type() -> MobType:
+	var elapsed := COUNTDOWN_DURATION - time_left
+	var minute := clampi(floori(elapsed / WAVE_DURATION), 0, MINUTE_SPAWN_TABLE.size() - 1)
+	var weights: Dictionary = MINUTE_SPAWN_TABLE[minute]
+	var total := 0
+	for weight in weights.values():
+		total += weight
+	var roll := randi_range(1, total)
+	for type in weights:
+		roll -= weights[type]
+		if roll <= 0:
+			return type
+	return MobType.NORMAL
+
 func spawn_boss():
-	var boss = spawn_mob(true)
+	var boss = spawn_mob(MobType.BOSS)
 	boss.died.connect(_on_boss_died)
 
 func _on_boss_died():
-	# The boss kill can also trigger a level-up; the win screen takes priority
+	_end_game(%WinScreen)
+
+# Shows the game-over or win screen. Whichever happens first wins, and any
+# open upgrade screen is closed so it can't unpause the game behind it.
+func _end_game(screen: CanvasLayer) -> void:
+	if game_ended:
+		return
+	game_ended = true
+	pending_upgrades = 0
 	%UpgradeScreen.hide()
-	%WinScreen.show()
+	screen.show()
 	get_tree().paused = true
 
 func _on_timer_timeout():
 	if time_left <= 0.0:
 		return
-	spawn_mob()
+	spawn_mob(_pick_mob_type())
 	_update_spawn_rate()
 
 
 func _on_player_health_depleted():
-	%GameOver.show()
-	get_tree().paused = true
+	_end_game(%GameOver)
 
 func _on_mob_died():
 	xp.emit()
 
 func _on_player_upgraded() -> void:
+	if game_ended:
+		return
+	pending_upgrades += 1
+	# Already showing choices: this level-up waits its turn instead of
+	# rerolling the current options
+	if not %UpgradeScreen.visible:
+		_show_upgrade_choices()
+
+func _show_upgrade_choices() -> void:
 	var options := ALL_UPGRADES.duplicate()
 	options.shuffle()
 	for i in buttons.size():
@@ -113,6 +176,8 @@ func _on_player_upgraded() -> void:
 
 
 func _on_button_pressed(upgrade_name) -> void:
+	if game_ended:
+		return
 	match upgrade_name:
 		"DAMAGE": damage += 1.0
 		"CHAIN": chain_length += 1
@@ -120,6 +185,10 @@ func _on_button_pressed(upgrade_name) -> void:
 		"EXPLODE": explode_level += 1
 		"SLOW": slow_level += 1
 	upgrade_select.emit(upgrade_name)
+	pending_upgrades -= 1
+	if pending_upgrades > 0:
+		_show_upgrade_choices() # another level-up is queued
+		return
 	%UpgradeScreen.hide()
 	get_tree().paused = false
 
@@ -142,10 +211,36 @@ func get_explosion_radius() -> float:
 	return 150.0 + 50.0 * (explode_level - 1)
 
 func explode_at(pos: Vector2) -> void:
-	var radius := get_explosion_radius()
-	for mob in get_tree().get_nodes_in_group("mobs"):
-		if mob.global_position.distance_to(pos) <= radius:
-			mob.take_damage(damage)
+	damage_mobs_in_radius(pos, get_explosion_radius(), damage)
+
+# Shared by the explode upgrade and exploding slimes. Call it deferred from a
+# death so chain reactions don't recurse deeply in one call stack.
+# Uses a physics query so only nearby enemies are checked, not every enemy
+# on the map (big chain reactions used to check every mob per explosion).
+func damage_mobs_in_radius(pos: Vector2, radius: float, amount: float) -> void:
+	explosion_shape.radius = radius
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = explosion_shape
+	query.transform = Transform2D(0.0, pos)
+	query.collision_mask = 2 # enemies only
+	query.collide_with_areas = false
+	var radius_sq := radius * radius
+	for result in get_world_2d().direct_space_state.intersect_shape(query, 512):
+		var mob = result.collider
+		# Same rule as before: the mob's centre must be inside the blast
+		var in_blast: bool = mob.global_position.distance_squared_to(pos) <= radius_sq
+		if in_blast and mob.has_method("take_damage"):
+			mob.take_damage(amount) # already-dead mobs ignore this
+
+# Called by mobs instead of spawning smoke directly; skips the effect once
+# this frame's budget is used up.
+func spawn_smoke(pos: Vector2) -> void:
+	if smoke_this_frame >= MAX_SMOKE_PER_FRAME:
+		return
+	smoke_this_frame += 1
+	var smoke = preload("res://smoke_explosion/smoke_explosion.tscn").instantiate()
+	add_child(smoke)
+	smoke.global_position = pos
 
 
 func _on_main_menu_button_pressed() -> void:

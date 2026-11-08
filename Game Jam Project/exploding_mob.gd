@@ -1,101 +1,45 @@
-extends CharacterBody2D
+extends "res://mob.gd"
 
-signal died
+# Rushes the player. Once the player is inside its blast radius it slows
+# down, and after the Timer (2s) it explodes on its own (not a kill: no XP).
+# If the player kills it first it still explodes (and counts as a kill), so
+# shooting it early can clear out nearby enemies.
+# Either way, the explosion hurts the player and other enemies in range.
 
-const BURN_TICK_INTERVAL := 0.5
-const SLOW_MULTIPLIER := 0.75 # flat 25% speed decrease
-
-var speed = randf_range(400, 500)
-var health = 3.0
-var dead := false
-
-# Status effects
-var burn_time_left := 0.0
-var burn_damage_per_tick := 0.0
-var burn_tick_timer := 0.0
-var slow_time_left := 0.0
-
-@onready var player = get_node("/root/Game/Player")
-@onready var game = get_node("/root/Game")
-
-@export var default_color = Color.RED
-
-func _ready():
-	add_to_group("mobs")
-	%ExplodingSlime.play_walk()
+const EXPLOSION_DAMAGE := 10.0 # to the player
+const ENEMY_EXPLOSION_DAMAGE := 3.0 # to other enemies (a normal slime has 3 health)
+const FUSE_SPEED := 150.0
 
 
-func _physics_process(_delta):
-	_process_status_effects(_delta)
-	if dead:
-		return
+func _init():
+	default_color = Color.RED
+	speed = randf_range(400, 500)
 
-	var current_speed = speed
-	if slow_time_left > 0.0:
-		current_speed *= SLOW_MULTIPLIER
-	var direction = global_position.direction_to(player.global_position)
-	velocity = direction * current_speed
-	move_and_slide()
-
-func _process_status_effects(delta):
-	if slow_time_left > 0.0:
-		slow_time_left -= delta
-
-	if burn_time_left > 0.0:
-		burn_time_left -= delta
-		burn_tick_timer += delta
-		if burn_tick_timer >= BURN_TICK_INTERVAL:
-			burn_tick_timer -= BURN_TICK_INTERVAL
-			take_damage(burn_damage_per_tick)
-
-	# Tint: orange while burning, blue while slowed
-	if burn_time_left > 0.0:
-		%ExplodingSlime.modulate = Color(1.0, 0.55, 0.3)
-	elif slow_time_left > 0.0:
-		%ExplodingSlime.modulate = Color(0.55, 0.75, 1.0)
-	else:
-		%ExplodingSlime.modulate = default_color
-
-
-# Called by bullets on hit, applies whichever on-hit upgrades the player owns.
-func apply_hit_effects():
-	if game.fire_level > 0:
-		burn_time_left = game.get_burn_duration()
-		burn_damage_per_tick = game.get_burn_damage_per_tick()
-		burn_tick_timer = 0.0
-	if game.slow_level > 0:
-		slow_time_left = game.get_slow_duration()
-
-
-func take_damage(amount: float):
-	if dead:
-		return
-	%ExplodingSlime.play_hurt()
-	health -= amount
-
-	if health <= 0:
-		die()
-
-func die():
-	dead = true
-	remove_from_group("mobs")
-	var smoke_scene = preload("res://smoke_explosion/smoke_explosion.tscn")
-	var smoke = smoke_scene.instantiate()
-	died.emit()
-	get_parent().add_child(smoke)
-	smoke.global_position = global_position
-	if game.explode_level > 0:
-		# Deferred so chain reactions don't recurse deeply in one call stack
-		game.explode_at.call_deferred(global_position)
-	queue_free()
 
 func _on_explosion_area_body_entered(body: Node2D) -> void:
-	if body == player:
-		speed = 150.0
+	# Only light the fuse once, so walking in and out can't keep resetting it
+	if body == player and $Timer.is_stopped():
+		speed = FUSE_SPEED
 		$Timer.start()
 
+
 func _on_timer_timeout() -> void:
+	if dead:
+		return
+	die(false) # blew itself up, so it doesn't count as a kill
+
+
+func die(counts_as_kill := true):
+	_explode()
+	super(counts_as_kill)
+
+
+func _explode():
 	if $ExplosionArea.overlaps_body(player):
-		player.health -= 10	
-	health = 0
-	die()
+		player.take_damage(EXPLOSION_DAMAGE)
+	var blast_shape: CollisionShape2D = $ExplosionArea/CollisionShape2D
+	# Leave our own group first so the blast doesn't hit this slime again
+	remove_from_group("mobs")
+	game.damage_mobs_in_radius.call_deferred(
+		blast_shape.global_position, blast_shape.shape.radius, ENEMY_EXPLOSION_DAMAGE
+	)

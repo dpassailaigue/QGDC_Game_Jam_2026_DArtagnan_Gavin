@@ -4,6 +4,8 @@ signal died
 
 const BURN_TICK_INTERVAL := 0.5
 const SLOW_MULTIPLIER := 0.75 # flat 25% speed decrease
+const BURN_COLOR := Color(1.0, 0.55, 0.3)
+const SLOW_COLOR := Color(0.55, 0.75, 1.0)
 
 var speed = randf_range(200, 300)
 var health = 3.0
@@ -15,6 +17,12 @@ const BOSS_HEALTH_MULTIPLIER := 10.0
 const TREE_CRUSH_RADIUS := 150.0
 var is_boss := false
 
+# Empowered settings (set is_empowered before adding the mob to the scene)
+const EMPOWERED_SCALE := 1.25
+const EMPOWERED_HEALTH_MULTIPLIER := 2.0
+const EMPOWERED_COLOR := Color(0.7, 0.55, 0.05) # dark yellow
+var is_empowered := false
+
 # Status effects
 var burn_time_left := 0.0
 var burn_damage_per_tick := 0.0
@@ -23,14 +31,24 @@ var slow_time_left := 0.0
 
 @onready var player = get_node("/root/Game/Player")
 @onready var game = get_node("/root/Game")
+@onready var slime = %Slime # cached: looked up every frame otherwise
+
+# Tint when no status effect is active (mob variants set their own colour)
+@export var default_color := Color.WHITE
 
 
 func _ready():
 	add_to_group("mobs")
-	%Slime.play_walk()
+	slime.play_walk()
+	if is_empowered:
+		health *= EMPOWERED_HEALTH_MULTIPLIER
+		default_color = EMPOWERED_COLOR
+		slime.scale *= EMPOWERED_SCALE
+		$CollisionShape2D.scale *= EMPOWERED_SCALE
+		$CollisionShape2D.position *= EMPOWERED_SCALE
 	if is_boss:
 		health *= BOSS_HEALTH_MULTIPLIER
-		%Slime.scale *= BOSS_SCALE
+		slime.scale *= BOSS_SCALE
 		$CollisionShape2D.scale *= BOSS_SCALE
 		$CollisionShape2D.position *= BOSS_SCALE
 		# Walk straight through trees (they get crushed instead)
@@ -48,9 +66,13 @@ func _physics_process(delta):
 	var current_speed = speed
 	if slow_time_left > 0.0:
 		current_speed *= SLOW_MULTIPLIER
-	var direction = global_position.direction_to(player.global_position)
-	velocity = direction * current_speed
+	velocity = _get_move_direction() * current_speed
 	move_and_slide()
+
+
+# Walk straight at the player. Mob variants override this for other movement.
+func _get_move_direction() -> Vector2:
+	return global_position.direction_to(player.global_position)
 
 
 func _crush_nearby_trees():
@@ -63,9 +85,7 @@ func _crush_nearby_trees():
 
 
 func _spawn_smoke(pos: Vector2):
-	var smoke = preload("res://smoke_explosion/smoke_explosion.tscn").instantiate()
-	get_parent().add_child(smoke)
-	smoke.global_position = pos
+	game.spawn_smoke(pos)
 
 
 func _process_status_effects(delta):
@@ -79,13 +99,14 @@ func _process_status_effects(delta):
 			burn_tick_timer -= BURN_TICK_INTERVAL
 			take_damage(burn_damage_per_tick)
 
-	# Tint: orange while burning, blue while slowed
+	# Tint: orange while burning, blue while slowed (only touch it on change)
+	var tint := default_color
 	if burn_time_left > 0.0:
-		%Slime.modulate = Color(1.0, 0.55, 0.3)
+		tint = BURN_COLOR
 	elif slow_time_left > 0.0:
-		%Slime.modulate = Color(0.55, 0.75, 1.0)
-	else:
-		%Slime.modulate = Color.WHITE
+		tint = SLOW_COLOR
+	if slime.modulate != tint:
+		slime.modulate = tint
 
 
 # Called by bullets on hit, applies whichever on-hit upgrades the player owns.
@@ -101,17 +122,22 @@ func apply_hit_effects():
 func take_damage(amount: float):
 	if dead:
 		return
-	%Slime.play_hurt()
+	slime.play_hurt()
 	health -= amount
 
 	if health <= 0:
 		die()
 
-func die():
+# counts_as_kill = false for deaths the player didn't cause (e.g. an exploding
+# slime blowing itself up): no XP, and no "explode on kill" upgrade trigger.
+func die(counts_as_kill := true):
 	dead = true
 	remove_from_group("mobs")
-	died.emit()
 	_spawn_smoke(global_position)
+	if not counts_as_kill:
+		queue_free()
+		return
+	died.emit()
 	if game.explode_level > 0:
 		# Deferred so chain reactions don't recurse deeply in one call stack
 		game.explode_at.call_deferred(global_position)
