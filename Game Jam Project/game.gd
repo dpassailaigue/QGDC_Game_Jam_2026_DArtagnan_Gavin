@@ -20,6 +20,7 @@ var shown_seconds := -1 # last whole second drawn on the countdown label
 
 var game_ended := false # set once the game-over or win screen is up
 var pending_upgrades := 0 # level-ups waiting to be picked
+var boss_spawned := false
 
 # Max smoke effects spawned per frame, so a huge chain reaction doesn't
 # create hundreds of shader nodes at once
@@ -53,13 +54,19 @@ func _update_floor() -> void:
 func _process(delta: float) -> void:
 	_update_floor()
 	smoke_this_frame = 0
+<<<<<<< HEAD
 	# Countdown freezes once the run is over (e.g. the player died), so the
 	# boss doesn't spawn over the Game Over screen
 	if time_left <= 0.0 or game_ended:
+=======
+	if game_ended:
+		return
+	if time_left <= 0.0:
+>>>>>>> 7087eb696ee366e8941a574c58460be7d44c5896
 		return
 	time_left = max(time_left - delta, 0.0)
 	_update_countdown_label()
-	if time_left == 0.0:
+	if time_left <= 0.0:
 		$Timer.stop()
 		countdown_finished.emit()
 		spawn_boss()
@@ -109,18 +116,36 @@ func spawn_mob(type: MobType):
 	const MOB = preload("res://mob.tscn")
 	const ZIGZAG_MOB = preload("res://zigzag_mob.tscn")
 	const EXPLODING_MOB = preload("res://exploding_mob.tscn")
+	const BOSS = preload("res://boss.tscn")
+
 	var scene: PackedScene = MOB
+
 	match type:
-		MobType.ZIGZAG: scene = ZIGZAG_MOB
-		MobType.EXPLODING: scene = EXPLODING_MOB
+		MobType.NORMAL:
+			scene = MOB
+		MobType.EMPOWERED:
+			scene = MOB
+		MobType.ZIGZAG:
+			scene = ZIGZAG_MOB
+		MobType.EXPLODING:
+			scene = EXPLODING_MOB
+		MobType.BOSS:
+			scene = BOSS
 
 	%PathFollow2D.progress_ratio = randf()
+
 	var new_mob = scene.instantiate()
-	new_mob.is_boss = type == MobType.BOSS
-	new_mob.is_empowered = type == MobType.EMPOWERED
-	new_mob.died.connect(_on_mob_died)
+
+	if type == MobType.BOSS:
+		new_mob.is_boss = true
+	elif type == MobType.EMPOWERED:
+		new_mob.is_empowered = true
 	new_mob.global_position = %PathFollow2D.global_position
 	add_child(new_mob)
+	new_mob.global_position = %PathFollow2D.global_position
+	
+	new_mob.died.connect(_on_mob_died)
+
 	return new_mob
 
 # Weighted random pick from the current minute's row of the spawn table
@@ -139,6 +164,10 @@ func _pick_mob_type() -> MobType:
 	return MobType.NORMAL
 
 func spawn_boss():
+	if boss_spawned:
+		return
+
+	boss_spawned = true
 	var boss = spawn_mob(MobType.BOSS)
 	boss.died.connect(_on_boss_died)
 
