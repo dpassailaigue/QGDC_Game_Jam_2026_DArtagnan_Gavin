@@ -42,6 +42,20 @@ func _ready() -> void:
 		button.pressed.connect(func(): _on_button_pressed(button.text))
 	_create_countdown_label()
 	_update_spawn_rate()
+	_play_music()
+
+# Battle theme loops for the whole run. PROCESS_MODE_ALWAYS keeps it playing
+# while the tree is paused (upgrade screen, win/game over screens).
+const BATTLE_MUSIC := preload("res://battle_theme.mp3")
+func _play_music() -> void:
+	var stream: AudioStreamMP3 = BATTLE_MUSIC.duplicate()
+	stream.loop = true
+	var music := AudioStreamPlayer.new()
+	music.name = "Music"
+	music.stream = stream
+	music.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(music)
+	music.play()
 
 # The floor sprite only covers a bit more than the screen. It follows the
 # player in whole-tile steps, so the world looks endless and the tile pattern
@@ -80,9 +94,12 @@ func _create_countdown_label() -> void:
 	countdown_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	countdown_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	countdown_label.position.y = 16
+	# Pixel font comes from the project theme (ui/pixel_theme.tres). A solid
+	# drop shadow instead of an outline keeps it readable while staying blocky.
 	countdown_label.add_theme_font_size_override("font_size", 48)
-	countdown_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	countdown_label.add_theme_constant_override("outline_size", 8)
+	countdown_label.add_theme_color_override("font_shadow_color", Color.BLACK)
+	countdown_label.add_theme_constant_override("shadow_offset_x", 6)
+	countdown_label.add_theme_constant_override("shadow_offset_y", 6)
 	layer.add_child(countdown_label)
 	_update_countdown_label()
 
@@ -137,7 +154,9 @@ func spawn_mob(type: MobType):
 	add_child(new_mob)
 	new_mob.global_position = %PathFollow2D.global_position
 	
-	new_mob.died.connect(_on_mob_died)
+	# XP for the kill comes from the enemy's xp_value (1 unless it says otherwise)
+	var xp_reward = new_mob.get("xp_value")
+	new_mob.died.connect(_on_mob_died.bind(xp_reward if xp_reward != null else 1))
 
 	return new_mob
 
@@ -196,8 +215,11 @@ func _on_player_health_depleted():
 func _on_player_death_animation_finished():
 	%GameOver.show()
 
-func _on_mob_died():
-	xp.emit()
+# One xp signal per point, so a 2 XP kill that crosses a level boundary still
+# triggers the level-up at the right point
+func _on_mob_died(amount: int = 1):
+	for i in amount:
+		xp.emit()
 
 func _on_player_upgraded() -> void:
 	if game_ended:
@@ -290,12 +312,13 @@ func damage_mobs_in_radius(pos: Vector2, radius: float, amount: float) -> void:
 			mob.take_damage(amount) # already-dead mobs ignore this
 
 # Called by mobs instead of spawning smoke directly; skips the effect once
-# this frame's budget is used up.
-func spawn_smoke(pos: Vector2) -> void:
+# this frame's budget is used up. fiery = red/orange/yellow explosion cloud.
+func spawn_smoke(pos: Vector2, fiery := false) -> void:
 	if smoke_this_frame >= MAX_SMOKE_PER_FRAME:
 		return
 	smoke_this_frame += 1
 	var smoke = preload("res://smoke_explosion/smoke_explosion.tscn").instantiate()
+	smoke.fiery = fiery
 	add_child(smoke)
 	smoke.global_position = pos
 

@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bqamqaqicjjvv" path="res://Wizard Pack/Idle.png" id="4_idle"]
 [ext_resource type="Texture2D" uid="uid://djsd16uyv23x4" path="res://Wizard Pack/Run.png" id="5_run"]
 [ext_resource type="Texture2D" uid="uid://s8qoa0gfyhqp" path="res://Wizard Pack/Death.png" id="6_death"]
+[ext_resource type="Script" path="res://pixel_bar.gd" id="7_pixelbar"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle0"]
 atlas = ExtResource("4_idle")
@@ -177,9 +178,6 @@ size = Vector2(66, 38)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kfffa"]
 size = Vector2(84, 54)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a5sny"]
-bg_color = Color(0.623529, 0.866667, 0.317647, 1)
-
 [node name="Player" type="CharacterBody2D" unique_id=1546396198]
 motion_mode = 1
 script = ExtResource("1_73bic")
@@ -211,16 +209,20 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=440365805]
 shape = SubResource("RectangleShape2D_kfffa")
 
-[node name="HealthBar" type="ProgressBar" parent="." unique_id=384523252]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1938475620]
 unique_name_in_owner = true
-z_index = 100
-offset_left = -83.0
-offset_top = -185.0
-offset_right = 87.0
-offset_bottom = -150.0
-theme_override_styles/fill = SubResource("StyleBoxFlat_a5sny")
-max_value = 25.0
-value = 25.0
-show_percentage = false
+
+[node name="HealthBar" type="Control" parent="HUD" unique_id=384523252]
+unique_name_in_owner = true
+layout_mode = 3
+anchor_right = 0.25
+offset_left = 12.0
+offset_top = 12.0
+offset_bottom = 44.0
+mouse_filter = 2
+script = ExtResource("7_pixelbar")
+max_value = 50.0
+value = 50.0
+fill_color = Color(0.623529, 0.866667, 0.317647, 1)
 
 [connection signal="animation_finished" from="Wizard" to="." method="_on_wizard_animation_finished"]

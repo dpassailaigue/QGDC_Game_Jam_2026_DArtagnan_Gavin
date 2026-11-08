@@ -23,6 +23,7 @@ var sweep_from = null
 # enemy -> enemy for each chain), each launching when the previous one lands.
 # Damage is dealt by the bolt when it reaches its enemy.
 const LIGHTNING_BOLT = preload("res://lightning_bolt.tscn")
+const ENEMY_LAYER := 2 # physics layer 2 = enemies
 var link_start = null # where the current link's bolt starts (set on 1st frame)
 var prev_bolt = null # the previous link's bolt; the next one launches when it lands
 var link_source = null # what the current link's bolt comes from (player, then enemies)
@@ -58,8 +59,8 @@ func _physics_process(delta):
 	position += motion
 	travelled_distance += SPEED * delta
 	if travelled_distance > RANGE:
-		# Missed everything: the bolt fizzles out where the shot ended. After a
-		# hit with no enemy left to chain to, the lightning just ends there.
+		# Missed everything: the bolt fizzles out where the shot ended. (A chain
+		# link that loses its target also ends here, with no extra bolt.)
 		if hit_ids.is_empty():
 			_spawn_bolt(null)
 		queue_free()
@@ -69,7 +70,9 @@ func _sweep(from: Vector2, to: Vector2) -> Dictionary:
 	query.exclude = ray_exclude
 	return get_world_2d().direct_space_state.intersect_ray(query)
 
-func find_enemy():
+# Aims at the nearest enemy that can be chained to. Returns false if there's
+# none (too close, too far from the player, or already hit).
+func find_enemy() -> bool:
 	var enemies_in_range = %EnemyScanner.get_overlapping_bodies()
 	var closest_body = null
 	var min_distance = INF
@@ -84,6 +87,8 @@ func find_enemy():
 			min_distance = dist
 	if closest_body:
 		look_at(closest_body.global_position)
+		return true
+	return false
 
 func _on_body_entered(body):
 	_hit(body)
@@ -96,10 +101,14 @@ func _hit(body):
 	# The bolt for this link deals the damage when it visually lands
 	_spawn_bolt(body)
 	chain -= 1
-	if chain <= 0:
+	# Decide on the next link now, before any bolt animation has played: with
+	# no enemy close enough to chain to, the lightning ends here and no next
+	# bolt is ever created.
+	if chain <= 0 or not find_enemy():
 		queue_free()
-	else:
-		find_enemy()
+		return
+	# Chain links only jump to enemies; trees can't catch them on the way
+	collision_mask = ENEMY_LAYER
 
 # Bolt from the current link's start to here; the next link starts here
 func _spawn_bolt(target: Node) -> void:

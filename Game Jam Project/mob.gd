@@ -10,6 +10,7 @@ const SLOW_COLOR := Color(0.55, 0.75, 1.0)
 var speed = randf_range(200, 300)
 var health = 3.0
 var dead := false
+var xp_value := 1 # XP the player gets for killing this enemy
 # The boss (boss.tscn/boss.gd) and the stronger enemy (big_mob.tscn/big_mob.gd)
 # are their own scenes now.
 
@@ -55,8 +56,14 @@ func _get_move_direction() -> Vector2:
 	return global_position.direction_to(player.global_position)
 
 
-func _spawn_smoke(pos: Vector2):
-	game.spawn_smoke(pos)
+func _spawn_smoke(pos: Vector2, fiery := false):
+	game.spawn_smoke(pos, fiery)
+
+
+# Whether this death is an explosion (fiery smoke instead of grey): a kill
+# while the player has the explode-on-kill upgrade. Exploding slimes always are.
+func _death_is_explosion(counts_as_kill: bool) -> bool:
+	return counts_as_kill and game.explode_level > 0
 
 
 func _process_status_effects(delta):
@@ -104,7 +111,7 @@ func take_damage(amount: float):
 func die(counts_as_kill := true):
 	dead = true
 	remove_from_group("mobs")
-	_spawn_smoke(global_position)
+	_spawn_smoke(global_position, _death_is_explosion(counts_as_kill))
 	if not counts_as_kill:
 		queue_free()
 		return

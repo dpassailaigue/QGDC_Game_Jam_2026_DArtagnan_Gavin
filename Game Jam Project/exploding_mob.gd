@@ -29,6 +29,11 @@ func _on_timer_timeout() -> void:
 	die(false) # blew itself up, so it doesn't count as a kill
 
 
+# It blows up however it dies, so its cloud is always fiery
+func _death_is_explosion(_counts_as_kill: bool) -> bool:
+	return true
+
+
 func die(counts_as_kill := true):
 	_explode()
 	super(counts_as_kill)

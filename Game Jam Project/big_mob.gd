@@ -8,6 +8,10 @@ extends "res://mob.gd"
 const HEALTH_MULTIPLIER := 3.0
 
 
+func _init():
+	xp_value = 2 # twice a normal slime's XP
+
+
 func _find_slime() -> Node2D:
 	return %BigSlime
 

@@ -1,18 +1,11 @@
 [gd_scene format=3 uid="uid://c2qg1nuvfnd4q"]
 
 [ext_resource type="Script" path="res://trees/tree.gd" id="1_tree"]
-[ext_resource type="Texture2D" uid="uid://b7rhtttevhxtj" path="res://characters/ground_shadow.png" id="2_shadow"]
 
 [node name="Tree" type="StaticBody2D" unique_id=195003767]
 script = ExtResource("1_tree")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=974039017]
-
-[node name="GroundShadow" type="Sprite2D" parent="." unique_id=63197420]
-modulate = Color(0.12, 0.12, 0.14, 0.45)
-z_index = -1
-z_as_relative = false
-texture = ExtResource("2_shadow")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=2053190559]
 modulate = Color(0.5, 0.62, 0.8, 1)

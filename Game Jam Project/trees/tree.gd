@@ -4,7 +4,6 @@ extends StaticBody2D
 # created. The images were cut out of that sheet into res://trees/tree_*.png.
 
 const SCALE := 1.5
-const SHADOW_TEXTURE_WIDTH := 84.0 # characters/ground_shadow.png
 
 # base = centre of the trunk's bottom row, in image pixels. It's placed on this
 # node's origin, so the tree y-sorts by where it touches the ground.
@@ -28,7 +27,3 @@ func _ready() -> void:
 	var shape := CircleShape2D.new()
 	shape.radius = maxf(trunk_width * 0.8, 10.0)
 	$CollisionShape2D.shape = shape
-
-	# Translucent grey shadow (tint set in tree.tscn), about 3 trunks wide
-	var shadow_scale := trunk_width * 3.0 / SHADOW_TEXTURE_WIDTH
-	$GroundShadow.scale = Vector2(shadow_scale, shadow_scale)

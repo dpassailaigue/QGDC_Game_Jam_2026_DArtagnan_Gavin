@@ -74,7 +74,7 @@ Settings/Show_Tooltips=true
 
 [application]
 
-config/name="QGDC Game Jam 2026 Project"
+config/name="Lightning Wizard"
 run/main_scene="res://main_menu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.png"
@@ -96,6 +96,10 @@ enabled=PackedStringArray("res://addons/colorpicker_presets/plugin.cfg")
 [global_group]
 
 environment=""
+
+[gui]
+
+theme/custom="res://ui/pixel_theme.tres"
 
 [input]
 

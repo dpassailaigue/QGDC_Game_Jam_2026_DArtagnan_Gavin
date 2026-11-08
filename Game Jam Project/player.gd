@@ -4,13 +4,13 @@ signal health_depleted
 signal upgraded
 signal death_animation_finished # the Game Over screen waits for this
 
-var health = 25.0
+var health = 50.0
 var dead := false
 # Level-up curve: XP needed for the next level grows by a fixed step, capped.
 # Spawns per minute are constant (~330), so XP supply doesn't grow over the
 # run; what grows is the player's kill power. A linear step with a cap keeps
 # level-ups roughly every 15-20s for the whole 5 minutes (~17 upgrades).
-# Every enemy type gives 1 XP.
+# Enemies give 1 XP, except the big (empowered) slime, which gives 2.
 const FIRST_LEVEL_XP := 15
 const LEVEL_XP_STEP := 10
 const MAX_LEVEL_XP := 140
@@ -20,13 +20,16 @@ var level = 1
 var upgrade_need = FIRST_LEVEL_XP # total XP at which the next level-up happens
 var level_start_xp = 0 # total XP when the current level began
 
-# XP bar along the bottom of the screen
-const XP_BAR_HEIGHT := 10.0
-const XP_BAR_WIDTH_RATIO := 0.6 # fraction of the screen width, centred
-const XP_BAR_BOTTOM_MARGIN := 40.0 # gap between the bar and the bottom edge
-const XP_BAR_BACK_COLOR := Color(0.5, 0.5, 0.5, 0.5) # grey, slightly see-through
-const XP_BAR_FILL_COLOR := Color(0.55, 0.85, 1.0, 1.0) # light blue, opaque
-var xp_bar_fill: ColorRect
+# Both bars sit in the HUD layer in the top-left corner and are drawn as
+# pixel art (pixel_bar.gd, 4px blocks). The health bar's position/size is set
+# in player.tscn (12px from the edges, 1/4 of the screen wide); the XP bar is
+# lined up underneath it with a small gap. Sizes are multiples of 4 so they
+# land on the pixel grid.
+const PIXEL_BAR = preload("res://pixel_bar.gd")
+const XP_BAR_HEIGHT := 20.0
+const XP_BAR_GAP := 8.0 # space between the health bar and the XP bar
+const XP_BAR_FILL_COLOR := Color(0.55, 0.85, 1.0, 1.0) # light blue
+var xp_bar: Control
 
 var speed = 600.0
 
@@ -34,43 +37,27 @@ func _ready():
 	_create_xp_bar()
 
 func _create_xp_bar():
-	var layer := CanvasLayer.new()
-	add_child(layer)
-	var back := ColorRect.new()
-	back.color = XP_BAR_BACK_COLOR
-	back.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	# Centred horizontally (the camera follows the player, so this is centred
-	# under the player), raised slightly off the bottom edge
-	var half_width := (1.0 - XP_BAR_WIDTH_RATIO) / 2.0
-	back.anchor_left = half_width
-	back.anchor_right = 1.0 - half_width
-	back.anchor_top = 1.0
-	back.anchor_bottom = 1.0
-	back.offset_left = 0.0
-	back.offset_right = 0.0
-	back.offset_top = -XP_BAR_BOTTOM_MARGIN - XP_BAR_HEIGHT
-	back.offset_bottom = -XP_BAR_BOTTOM_MARGIN
-	layer.add_child(back)
-	xp_bar_fill = ColorRect.new()
-	xp_bar_fill.color = XP_BAR_FILL_COLOR
-	xp_bar_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	# Fills the back bar from the left; anchor_right is the progress (0 to 1)
-	xp_bar_fill.anchor_left = 0.0
-	xp_bar_fill.anchor_top = 0.0
-	xp_bar_fill.anchor_bottom = 1.0
-	xp_bar_fill.offset_left = 0.0
-	xp_bar_fill.offset_top = 0.0
-	xp_bar_fill.offset_right = 0.0
-	xp_bar_fill.offset_bottom = 0.0
-	back.add_child(xp_bar_fill)
+	var health_bar: Control = %HealthBar
+	xp_bar = PIXEL_BAR.new()
+	xp_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	xp_bar.fill_color = XP_BAR_FILL_COLOR
+	xp_bar.max_value = 1.0
+	# Same left/right edges as the health bar, just below it
+	xp_bar.anchor_left = health_bar.anchor_left
+	xp_bar.anchor_right = health_bar.anchor_right
+	xp_bar.anchor_top = health_bar.anchor_top
+	xp_bar.anchor_bottom = health_bar.anchor_top
+	xp_bar.offset_left = health_bar.offset_left
+	xp_bar.offset_right = health_bar.offset_right
+	xp_bar.offset_top = health_bar.offset_bottom + XP_BAR_GAP
+	xp_bar.offset_bottom = xp_bar.offset_top + XP_BAR_HEIGHT
+	%HUD.add_child(xp_bar)
 	_update_xp_bar()
 
 # Fill = progress from the start of this level to the next level-up
 func _update_xp_bar():
 	var progress := float(xp - level_start_xp) / float(upgrade_need - level_start_xp)
-	# Set anchor and offset together; setting the anchor alone makes Godot shift
-	# the offset to keep the old width
-	xp_bar_fill.set_anchor_and_offset(SIDE_RIGHT, clampf(progress, 0.0, 1.0), 0.0)
+	xp_bar.value = clampf(progress, 0.0, 1.0)
 
 func _physics_process(delta):
 	# Dead: no more input, movement or damage; the death animation plays out
@@ -98,9 +85,25 @@ func _physics_process(delta):
 	if overlapping_mobs:
 		take_damage(DAMAGE_RATE * overlapping_mobs.size() * delta)
 
+# Hurt flash: the wizard is tinted slightly red for HURT_TINT_TIME after
+# taking damage. Every hit restarts the timer, so constant contact damage
+# keeps him red until 0.5s after the last hit.
+const HURT_TINT := Color(1.0, 0.55, 0.55)
+const HURT_TINT_TIME := 0.5
+var hurt_tint_left := 0.0
+
+func _process(delta):
+	if hurt_tint_left > 0.0:
+		hurt_tint_left -= delta
+		if hurt_tint_left <= 0.0:
+			%Wizard.modulate = Color.WHITE
+
 func take_damage(amount: float):
 	if dead:
 		return
+	if amount > 0.0:
+		hurt_tint_left = HURT_TINT_TIME
+		%Wizard.modulate = HURT_TINT
 	health -= amount
 	%HealthBar.value = health
 	if health <= 0.0:
@@ -109,7 +112,6 @@ func take_damage(amount: float):
 func die():
 	dead = true
 	velocity = Vector2.ZERO
-	%HealthBar.hide()
 	# Stop shooting: the gun's process and fire timer are both paused
 	%Gun.process_mode = Node.PROCESS_MODE_DISABLED
 	%Gun.hide()

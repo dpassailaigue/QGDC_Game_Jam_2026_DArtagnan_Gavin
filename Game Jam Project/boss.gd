@@ -11,7 +11,7 @@ var dead := false
 
 # Boss settings (set is_boss before adding the mob to the scene)
 const BOSS_SCALE := 1.0
-const BOSS_HEALTH_MULTIPLIER := 500.0
+const BOSS_HEALTH_MULTIPLIER := 250.0
 const TREE_CRUSH_RADIUS := 150.0
 var is_boss := true
 
@@ -182,8 +182,9 @@ func _draw():
 		)
 
 
-func _spawn_smoke(pos: Vector2):
+func _spawn_smoke(pos: Vector2, fiery := false):
 	var smoke = preload("res://smoke_explosion/smoke_explosion.tscn").instantiate()
+	smoke.fiery = fiery # red/orange/yellow explosion instead of grey smoke
 	get_parent().add_child(smoke)
 	smoke.global_position = pos
 
@@ -231,7 +232,8 @@ func die():
 	dead = true
 	remove_from_group("mobs")
 	died.emit()
-	_spawn_smoke(global_position)
+	# Explode-on-kill upgrade: the death cloud is an explosion
+	_spawn_smoke(global_position, game.explode_level > 0)
 	if game.explode_level > 0:
 		# Deferred so chain reactions don't recurse deeply in one call stack
 		game.explode_at.call_deferred(global_position)
