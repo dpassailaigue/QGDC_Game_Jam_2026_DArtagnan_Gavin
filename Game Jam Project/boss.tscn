@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bfxmby4bqxw1n"]
+
+[ext_resource type="Script" uid="uid://caq1bw8r0oj6v" path="res://boss.gd" id="1_6xxrv"]
+[ext_resource type="PackedScene" uid="uid://tow1crtlu1gh" path="res://characters/slime/bossSlime.tscn" id="2_6xxrv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ypitm"]
+radius = 225.0089
+
+[node name="Boss" type="CharacterBody2D" unique_id=1758012314]
+collision_layer = 2
+script = ExtResource("1_6xxrv")
+
+[node name="BossSlime" parent="." unique_id=972096811 instance=ExtResource("2_6xxrv")]
+unique_name_in_owner = true
+scale = Vector2(4, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=469449182]
+position = Vector2(1, -103)
+shape = SubResource("CircleShape2D_ypitm")
+debug_color = Color(0.701961, 0.282353, 0.352941, 0.419608)
+
+[node name="Dash_timer" type="Timer" parent="." unique_id=413460929]
+wait_time = 7.0
+
+[connection signal="timeout" from="Dash_timer" to="." method="_on_dash_timer_timeout"]

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b0dlsue5h7wac"]
+
+[ext_resource type="Script" path="res://big_mob.gd" id="1_ss8w3"]
+[ext_resource type="PackedScene" uid="uid://dt3cb7jvjkdun" path="res://characters/slime/bigSlime.tscn" id="2_fl4pj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ypitm"]
+radius = 118.03813
+
+[node name="BigMob" type="CharacterBody2D" unique_id=1758012314]
+collision_layer = 2
+script = ExtResource("1_ss8w3")
+
+[node name="BigSlime" parent="." unique_id=972096811 instance=ExtResource("2_fl4pj")]
+unique_name_in_owner = true
+scale = Vector2(2, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=469449182]
+position = Vector2(-1, -54)
+shape = SubResource("CircleShape2D_ypitm")
+debug_color = Color(0.701961, 0.282353, 0.352941, 0.419608)
