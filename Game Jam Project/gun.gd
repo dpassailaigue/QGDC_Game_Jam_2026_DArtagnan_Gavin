@@ -7,6 +7,8 @@ const MAX_RANGE := 500.0
 var target: Node2D = null
 
 @onready var player: Node2D = get_parent()
+@onready var game = get_node("/root/Game")
+@onready var base_fire_interval: float = $Timer.wait_time
 
 
 func _process(_delta):
@@ -39,3 +41,5 @@ func shoot():
 
 func _on_timer_timeout() -> void:
 	shoot()
+	# Picks up attack speed upgrades from the next shot onwards
+	$Timer.wait_time = base_fire_interval / game.get_attack_speed_multiplier()

@@ -19,7 +19,7 @@ var is_boss := false
 
 # Empowered settings (set is_empowered before adding the mob to the scene)
 const EMPOWERED_SCALE := 1.25
-const EMPOWERED_HEALTH_MULTIPLIER := 2.0
+const EMPOWERED_HEALTH_MULTIPLIER := 3.0
 const EMPOWERED_COLOR := Color(0.7, 0.55, 0.05) # dark yellow
 var is_empowered := false
 

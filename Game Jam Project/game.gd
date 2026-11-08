@@ -10,7 +10,7 @@ const WAVE_DURATION := 60.0
 const MIN_SPAWN_RATE := 1.0 # spawns per second at the start of each minute
 const MAX_SPAWN_RATE := 10.0 # spawns per second at the end of each minute
 
-const ALL_UPGRADES := ["DAMAGE", "SPEED", "CHAIN", "FIRE", "EXPLODE", "SLOW"]
+const ALL_UPGRADES := ["DAMAGE", "SPEED", "CHAIN", "FIRE", "EXPLODE", "SLOW", "ATTACK SPEED"]
 
 @onready var buttons = [%Button1, %Button2, %Button3]
 
@@ -33,6 +33,7 @@ var chain_length := 2
 var fire_level := 0
 var explode_level := 0
 var slow_level := 0
+var attack_speed_level := 0
 
 func _ready() -> void:
 	for button in buttons:
@@ -89,8 +90,8 @@ const MINUTE_SPAWN_TABLE := [
 	{MobType.NORMAL: 8}, # 5:00 - 4:00
 	{MobType.NORMAL: 8, MobType.ZIGZAG: 2}, # 4:00 - 3:00
 	{MobType.NORMAL: 8, MobType.EXPLODING: 2}, # 3:00 - 2:00
-	{MobType.EMPOWERED: 8, MobType.ZIGZAG: 2}, # 2:00 - 1:00
-	{MobType.NORMAL: 3, MobType.EMPOWERED: 5, MobType.ZIGZAG: 1, MobType.EXPLODING: 1}, # 1:00 - 0:00
+	{MobType.NORMAL: 3, MobType.EMPOWERED: 5, MobType.ZIGZAG: 2}, # 2:00 - 1:00
+	{MobType.EMPOWERED: 8, MobType.ZIGZAG: 1, MobType.EXPLODING: 1}, # 1:00 - 0:00
 ]
 
 func spawn_mob(type: MobType):
@@ -184,6 +185,7 @@ func _on_button_pressed(upgrade_name) -> void:
 		"FIRE": fire_level += 1
 		"EXPLODE": explode_level += 1
 		"SLOW": slow_level += 1
+		"ATTACK SPEED": attack_speed_level += 1
 	upgrade_select.emit(upgrade_name)
 	pending_upgrades -= 1
 	if pending_upgrades > 0:
@@ -205,6 +207,10 @@ func get_burn_damage_per_tick() -> float:
 # Slow: 1.5s at level 1; each level adds +0.75s
 func get_slow_duration() -> float:
 	return 1.5 + 0.75 * (slow_level - 1)
+
+# Attack speed: 1.1x at level 1, 1.2x at level 2, 1.3x at level 3, ...
+func get_attack_speed_multiplier() -> float:
+	return 1.0 + 0.1 * attack_speed_level
 
 # Explode: damage = player damage; radius 150 at level 1, +50 per level
 func get_explosion_radius() -> float:
