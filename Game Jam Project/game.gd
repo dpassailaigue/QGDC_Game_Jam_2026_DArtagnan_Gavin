@@ -47,9 +47,14 @@ func _ready() -> void:
 # Battle theme loops for the whole run. PROCESS_MODE_ALWAYS keeps it playing
 # while the tree is paused (upgrade screen, win/game over screens).
 const BATTLE_MUSIC := preload("res://battle_theme.mp3")
+# Where the music starts in the file (skips the MP3 encoder's ~30ms of silence),
+# so each loop restarts right on the first beat. The file itself is trimmed to
+# end exactly after bar 24 (150 BPM), so loops join with no gap.
+const BATTLE_MUSIC_LOOP_START := 1259.0 / 44100.0
 func _play_music() -> void:
 	var stream: AudioStreamMP3 = BATTLE_MUSIC.duplicate()
 	stream.loop = true
+	stream.loop_offset = BATTLE_MUSIC_LOOP_START
 	var music := AudioStreamPlayer.new()
 	music.name = "Music"
 	music.stream = stream

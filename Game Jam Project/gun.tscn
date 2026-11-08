@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cswb5do8rrj7q" path="res://pistol/pistol.png" id="2_idur6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nthgb"]
-radius = 540.0
+radius = 790.0
 
 [node name="Gun" type="Area2D" unique_id=941152522]
 collision_layer = 0

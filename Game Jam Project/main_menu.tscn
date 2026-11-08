@@ -1,8 +1,8 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://do4nuifrl6nwh"]
 
-[ext_resource type="Script" path="res://main_menu.gd" id="1_menu"]
+[ext_resource type="Script" uid="uid://bgunnxvw71lpd" path="res://main_menu.gd" id="1_menu"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=86463933]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,16 +11,24 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_menu")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=126920492]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 1, 1, 1)
 
-[node name="Title" type="Label" parent="."]
+[node name="MainPage" type="Control" parent="." unique_id=1208707698]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="MainPage" unique_id=2121266493]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -36,7 +44,7 @@ text = "Lightning Wizard"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PlayButton" type="Button" parent="."]
+[node name="PlayButton" type="Button" parent="MainPage" unique_id=1152595035]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -45,7 +53,6 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -220.0
-offset_top = 0.0
 offset_right = 220.0
 offset_bottom = 110.0
 grow_horizontal = 2
@@ -53,7 +60,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 48
 text = "Play"
 
-[node name="QuitButton" type="Button" parent="."]
+[node name="QuitButton" type="Button" parent="MainPage" unique_id=2107757023]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -69,5 +76,147 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 32
 text = "Quit"
 
-[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
+[node name="CreditsButton" type="Button" parent="MainPage" unique_id=777681425]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = 255.0
+offset_right = 160.0
+offset_bottom = 340.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Credits"
+
+[node name="CreditsPage" type="Control" parent="." unique_id=472844426]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CreditsTitle" type="Label" parent="CreditsPage" unique_id=1399165431]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -600.0
+offset_top = 90.0
+offset_right = 600.0
+offset_bottom = 210.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 64
+text = "Credits"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Programming" type="RichTextLabel" parent="CreditsPage" unique_id=69844917]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.28
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_constants/line_separation = 16
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[center][font_size=32][u]Programming[/u][/font_size]
+
+Gavin Lacy
+D'Artagnan Passailaigue[/center]"
+scroll_active = false
+meta_underlined = false
+
+[node name="Art" type="RichTextLabel" parent="CreditsPage" unique_id=1793435900]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.28
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_constants/line_separation = 16
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[center][font_size=32][u]Art[/u][/font_size]
+
+Luiz Melo
+[url=https://luizmelo.itch.io][color=#2a5db0]https://luizmelo.itch.io[/color][/url][/center]"
+scroll_active = false
+meta_underlined = false
+
+[node name="MainThemeMusic" type="RichTextLabel" parent="CreditsPage" unique_id=193979123]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.54
+anchor_right = 0.5
+anchor_bottom = 0.76
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_constants/line_separation = 16
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[center][font_size=32][u]Music (Main Theme)[/u][/font_size]
+
+D'Artagnan Passailaigue[/center]"
+scroll_active = false
+meta_underlined = false
+
+[node name="BattleThemeMusic" type="RichTextLabel" parent="CreditsPage" unique_id=1233152016]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.54
+anchor_right = 1.0
+anchor_bottom = 0.76
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_constants/line_separation = 16
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[center][font_size=32][u]Music (Battle Theme)[/u][/font_size]
+
+Gavin Lacy[/center]"
+scroll_active = false
+meta_underlined = false
+
+[node name="BackButton" type="Button" parent="CreditsPage" unique_id=682545547]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -160.0
+offset_right = 250.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Back to Menu"
+
+[connection signal="pressed" from="MainPage/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MainPage/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MainPage/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="meta_clicked" from="CreditsPage/Art" to="." method="_on_credits_link_clicked"]
+[connection signal="pressed" from="CreditsPage/BackButton" to="." method="_on_back_button_pressed"]

@@ -1,8 +1,10 @@
 extends Area2D
 
 # Max distance (from the player) an enemy can be targeted at. The screen is
-# 1920x1080 with the camera on the player, so 500 keeps targets on screen.
-const MAX_RANGE := 500.0
+# 1920x1080 with the camera on the player: 750 reaches well toward the sides,
+# but slightly past the top/bottom edges (540px from the player).
+# The detection circle in gun.tscn must be at least this big.
+const MAX_RANGE := 750.0
 
 var target: Node2D = null
 

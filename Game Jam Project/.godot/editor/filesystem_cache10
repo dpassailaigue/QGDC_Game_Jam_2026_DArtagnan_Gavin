@@ -1,32 +1,32 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1794170609
-battle_theme.mp3::AudioStreamMP3::4836386906310018805::1794170489::1794170607::1::::<><><>0<>0<>5dcfb141388a75f8a16d7b1ed59cb9ef<>res://.godot/imported/battle_theme.mp3-7ffc81c7f6a9862c3a47f570f7fcd779.mp3str::
+::res://::1794172777
+battle_theme.mp3::AudioStreamMP3::4836386906310018805::1794171732::1794171751::1::::<><><>0<>0<>5dcfb141388a75f8a16d7b1ed59cb9ef<>res://.godot/imported/battle_theme.mp3-7ffc81c7f6a9862c3a47f570f7fcd779.mp3str::
 big_mob.gd::GDScript::3090858343597489403::1794163045::0::1::::<>CharacterBody2D<><>0<>0<><>::
-big_mob.tscn::PackedScene::4148035997136729994::1794159367::0::1::::<><><>0<>0<><>::res://big_mob.gd<>uid://dt3cb7jvjkdun::::res://characters/slime/bigSlime.tscn
-boss.gd::GDScript::4807453046355612727::1794163618::0::1::::<>CharacterBody2D<><>0<>0<><>::
-boss.tscn::PackedScene::2785577285361218929::1794159367::0::1::::<><><>0<>0<><>::uid://caq1bw8r0oj6v::::res://boss.gd<>uid://tow1crtlu1gh::::res://characters/slime/bossSlime.tscn
+big_mob.tscn::PackedScene::4148035997136729994::1794170771::0::1::::<><><>0<>0<><>::uid://bkbh8rb08a6pr::::res://big_mob.gd<>uid://dt3cb7jvjkdun::::res://characters/slime/bigSlime.tscn
+boss.gd::GDScript::4807453046355612727::1794170771::0::1::::<>CharacterBody2D<><>0<>0<><>::
+boss.tscn::PackedScene::2785577285361218929::1794170771::0::1::::<><><>0<>0<><>::uid://caq1bw8r0oj6v::::res://boss.gd<>uid://tow1crtlu1gh::::res://characters/slime/bossSlime.tscn
 bullet_2d.gd::GDScript::5756550784046680375::1794159963::0::1::::<>Area2D<><>0<>0<><>::
 bullet_2d.tscn::PackedScene::3645470024051463521::1794157867::0::1::::<><><>0<>0<><>::uid://coarsyh1eafkp::::res://bullet_2d.gd
 default_bus_layout.tres::AudioBusLayout::6564268947468103023::1794009543::0::1::::<><><>0<>0<><>::
-exploding_mob.gd::GDScript::624244052823324942::1794160670::0::1::::<>CharacterBody2D<><>0<>0<><>::
-exploding_mob.tscn::PackedScene::8913663863930542024::1794092005::0::1::::<><><>0<>0<><>::uid://i5nhc34lk1hy::::res://exploding_mob.gd<>uid://ogik4s70pgwl::::res://characters/slime/slime.tscn
-game.gd::GDScript::8436459038756774411::1794170598::0::1::::<>Node2D<><>0<>0<><>::
-gun.gd::GDScript::2880344380722337264::1794156385::0::1::::<>Area2D<><>0<>0<><>::
-gun.tscn::PackedScene::5840278233081519294::1794156384::0::1::::<><><>0<>0<><>::uid://bhbi365xsk225::::res://gun.gd<>uid://cswb5do8rrj7q::::res://pistol/pistol.png
+exploding_mob.gd::GDScript::624244052823324942::1794170771::0::1::::<>CharacterBody2D<><>0<>0<><>::
+exploding_mob.tscn::PackedScene::8913663863930542024::1794170771::0::1::::<><><>0<>0<><>::uid://i5nhc34lk1hy::::res://exploding_mob.gd<>uid://du6hgqxsqr8le::::res://characters/slime/explodingSlime.tscn
+game.gd::GDScript::8436459038756774411::1794171748::0::1::::<>Node2D<><>0<>0<><>::
+gun.gd::GDScript::2880344380722337264::1794172242::0::1::::<>Area2D<><>0<>0<><>::
+gun.tscn::PackedScene::5840278233081519294::1794172242::0::1::::<><><>0<>0<><>::uid://bhbi365xsk225::::res://gun.gd<>uid://cswb5do8rrj7q::::res://pistol/pistol.png
 icon.png::CompressedTexture2D::3850624499632875500::1794162589::1794162607::1::::<><><>0<>0<>08328dee63a8ba762d4beb129ea8dc66<>res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.ctex::
 lightning_bolt.gd::GDScript::7012230382531603334::1794159007::0::1::::<>AnimatedSprite2D<><>0<>0<><>::
 lightning_bolt.tscn::PackedScene::-1::1794158981::0::1::::<><><>0<>0<><>::res://lightning_bolt.gd<>uid://c5370r4lf6w6m::::res://Wizard Pack/lightning_v2_1.png<>uid://dff543cddsd8y::::res://Wizard Pack/lightning_v2_3.png<>uid://4u1mhx54g27n::::res://Wizard Pack/lightning_v2_4.png<>uid://ve8kta5yqg8u::::res://Wizard Pack/lightning_v2_5.png<>uid://tmxey6y7iu3k::::res://Wizard Pack/lightning_v2_6.png<>uid://cumtcvi87p4wp::::res://Wizard Pack/lightning_v2_7.png<>uid://dc3yjgsjw7f76::::res://Wizard Pack/lightning_v2_8.png<>uid://6p5cqbw7jt8l::::res://Wizard Pack/lightning_v2_9.png<>uid://y4gcgeitwfwn::::res://Wizard Pack/lightning_v2_11.png<>uid://bkx6rnot62e1k::::res://Wizard Pack/lightning_v2_12.png<>uid://7r87ey465mt2::::res://Wizard Pack/lightning_v2_13.png<>uid://c53u7hvah0b18::::res://Wizard Pack/lightning_v2_2.png
-main_menu.gd::GDScript::2849655078350541821::1794170609::0::1::::<>Control<><>0<>0<><>::
-main_menu.tscn::PackedScene::-1::1794162518::0::1::::<><><>0<>0<><>::
-main_theme.mp3::AudioStreamMP3::8495544776005854768::1794170138::1794170607::1::::<><><>0<>0<>e99c515dbfc4b535b270a0f6c08ff1c5<>res://.godot/imported/main_theme.mp3-7af2b54a0f9251b885089088bcb1ed16.mp3str::
-mob.gd::GDScript::1001648200538875950::1794163044::0::1::::<>CharacterBody2D<><>0<>0<><>::
-mob.tscn::PackedScene::9081061977632875729::1794009543::0::1::::<><><>0<>0<><>::uid://ojg88pe48jk5::::res://mob.gd<>uid://ogik4s70pgwl::::res://characters/slime/slime.tscn
+main_menu.gd::GDScript::2849655078350541821::1794171748::0::1::::<>Control<><>0<>0<><>::
+main_menu.tscn::PackedScene::8202598282362711343::1794172752::0::1::::<><><>0<>0<><>::uid://bgunnxvw71lpd::::res://main_menu.gd
+main_theme.mp3::AudioStreamMP3::8495544776005854768::1794171732::1794171751::1::::<><><>0<>0<>e99c515dbfc4b535b270a0f6c08ff1c5<>res://.godot/imported/main_theme.mp3-7af2b54a0f9251b885089088bcb1ed16.mp3str::
+mob.gd::GDScript::1001648200538875950::1794170771::0::1::::<>CharacterBody2D<><>0<>0<><>::
+mob.tscn::PackedScene::9081061977632875729::1794170771::0::1::::<><><>0<>0<><>::uid://ojg88pe48jk5::::res://mob.gd<>uid://ogik4s70pgwl::::res://characters/slime/slime.tscn
 pixel_bar.gd::GDScript::5132420341431784091::1794160599::0::1::::<>Control<><>0<>1<><>::
 player.gd::GDScript::3050301764329180417::1794163161::0::1::::<>CharacterBody2D<><>0<>0<><>::
 player.tscn::PackedScene::8470111591400466706::1794162182::0::1::::<><><>0<>0<><>::uid://bjpua3hfywlnl::::res://player.gd<>uid://pbmyh1qru7p::::res://characters/happy_boo/happy_boo.tscn<>uid://cphcr81upg72i::::res://gun.tscn
-survivors_game.tscn::PackedScene::8591458836669554224::1794162540::0::1::::<><><>0<>0<><>::uid://dsgxioo8wstff::::res://game.gd<>uid://dsw8raqgacxsc::::res://player.tscn<>uid://c2qg1nuvfnd4q::::res://trees/pine_tree.tscn
-zigzag_mob.gd::GDScript::1831653353702226174::1794096315::0::1::::<>CharacterBody2D<><>0<>0<><>::
-zigzag_mob.tscn::PackedScene::4369120424698477015::1794092005::0::1::::<><><>0<>0<><>::uid://1djce8fv8ltu::::res://zigzag_mob.gd<>uid://ogik4s70pgwl::::res://characters/slime/slime.tscn
+survivors_game.tscn::PackedScene::8591458836669554224::1794170771::0::1::::<><><>0<>0<><>::uid://dsgxioo8wstff::::res://game.gd<>uid://dsw8raqgacxsc::::res://player.tscn<>uid://c2qg1nuvfnd4q::::res://trees/tree.tscn<>uid://cq16tdt1eo2k7::::res://enemy_background_assets/floor_tile.png
+zigzag_mob.gd::GDScript::1831653353702226174::1794170771::0::1::::<>CharacterBody2D<><>0<>0<><>::
+zigzag_mob.tscn::PackedScene::4369120424698477015::1794170771::0::1::::<><><>0<>0<><>::uid://1djce8fv8ltu::::res://zigzag_mob.gd<>uid://bwx84cdhdhs0c::::res://characters/slime/zigzagSlime.tscn
 ::res://addons/::1794009688
 ::res://addons/colorpicker_presets/::1794009688
 colorpicker_presets.gd::GDScript::8382802027330247951::1794009543::0::1::::<>EditorPlugin<><>0<>1<><>::
@@ -38,18 +38,91 @@ ground_shadow.png::CompressedTexture2D::4668018078467755571::1794158261::1794158
 happy_boo.gd::GDScript::8747569224598363538::1794009543::0::1::::<>Node2D<><>0<>0<><>::
 happy_boo.tscn::PackedScene::31049085407951015::1794009543::0::1::::<><><>0<>0<><>::uid://dwvngmjrqmcf7::::res://characters/happy_boo/happy_boo.gd<>uid://b7rhtttevhxtj::::res://characters/ground_shadow.png<>uid://ng8e5ot0dtpd::::res://characters/happy_boo/square_foot.png<>uid://dhapxq8y8ow57::::res://characters/happy_boo/square_lower_leg.png<>uid://qmqpm6asge1i::::res://characters/happy_boo/square_upper_leg.png<>uid://cksiu5gst6fmp::::res://characters/happy_boo/square_body.png<>uid://cvs0lh814pk7h::::res://characters/happy_boo/square_face.png
 square_modification_stack.tres::SkeletonModificationStack2D::8504717324922621560::1794009543::0::1::::<><><>0<>0<><>::
-::res://characters/slime/::1794159367
-bigSlime.tscn::PackedScene::8550777572712042497::1794159385::0::1::::<><><>0<>0<><>::uid://c055juj57t86b::::res://characters/slime/slime.gd<>uid://dvgfmy6vtvjji::::res://characters/slime/slime_body.png<>uid://btbxea1f3vwot::::res://characters/slime/slime_body_hurt.png<>uid://c078jrp2yvc4s::::res://characters/slime/slime_face.png<>uid://cai2ijnbypqtr::::res://characters/slime/slime_hurt_eyes.png
-bossSlime.tscn::PackedScene::1363871654349006123::1794159385::0::1::::<><><>0<>0<><>::uid://c055juj57t86b::::res://characters/slime/slime.gd<>uid://dvgfmy6vtvjji::::res://characters/slime/slime_body.png<>uid://btbxea1f3vwot::::res://characters/slime/slime_body_hurt.png<>uid://c078jrp2yvc4s::::res://characters/slime/slime_face.png<>uid://cai2ijnbypqtr::::res://characters/slime/slime_hurt_eyes.png
-slime.gd::GDScript::6591332438663797051::1794009543::0::1::::<>Node2D<><>0<>0<><>::
-slime.tscn::PackedScene::995535223809565591::1794157553::0::1::::<><><>0<>0<><>::uid://dvgfmy6vtvjji::::res://characters/slime/slime_body.png<>uid://c055juj57t86b::::res://characters/slime/slime.gd<>uid://c078jrp2yvc4s::::res://characters/slime/slime_face.png<>uid://btbxea1f3vwot::::res://characters/slime/slime_body_hurt.png<>uid://cai2ijnbypqtr::::res://characters/slime/slime_hurt_eyes.png
+::res://characters/slime/::1794171037
+bigSlime.tscn::PackedScene::8550777572712042497::1794170935::0::1::::<><><>0<>0<><>::uid://c055juj57t86b::::res://characters/slime/slime.gd<>uid://bkk6c07almpdi::::res://Monsters_Creatures_Fantasy/Skeleton/Take Hit.png<>uid://cdkwot2cf3hav::::res://Monsters_Creatures_Fantasy/Skeleton/Idle.png<>uid://b0cjomeyv6ehv::::res://Monsters_Creatures_Fantasy/Skeleton/Walk.png
+bossSlime.tscn::PackedScene::1363871654349006123::1794170935::0::1::::<><><>0<>0<><>::uid://c055juj57t86b::::res://characters/slime/slime.gd<>uid://daml2ih37svql::::res://Monsters_Creatures_Fantasy/Flying eye/Take Hit.png<>uid://cs8tyy7ms2ikl::::res://Monsters_Creatures_Fantasy/Flying eye/Attack.png<>uid://rawmwxntwhwr::::res://Monsters_Creatures_Fantasy/Flying eye/Flight.png
+explodingSlime.tscn::PackedScene::8627471244672628102::1794170976::0::1::::<><><>0<>0<><>::uid://c055juj57t86b::::res://characters/slime/slime.gd<>uid://cj3wjkyja4ejf::::res://Monster_Creatures_Fantasy(Version 1.3)/Mushroom/Attack3.png<>uid://bnh74na7h16x::::res://Monsters_Creatures_Fantasy/Mushroom/Take Hit.png<>uid://dvcfcoddi36v1::::res://Monsters_Creatures_Fantasy/Mushroom/Idle.png<>uid://dlj77pct8m5qu::::res://Monsters_Creatures_Fantasy/Mushroom/Run.png
+slime.gd::GDScript::6591332438663797051::1794170902::0::1::::<>Node2D<><>0<>0<><>::
+slime.tscn::PackedScene::995535223809565591::1794170935::0::1::::<><><>0<>0<><>::uid://c055juj57t86b::::res://characters/slime/slime.gd<>uid://bsexjs3shlfnf::::res://Monsters Creatures Fantasy 2/Slime/walk.png<>uid://clnmjcog76spn::::res://Monsters Creatures Fantasy 2/Slime/hurt.png<>uid://b3ss1jkh55qou::::res://Monsters Creatures Fantasy 2/Slime/idle.png
 slime_body.png::CompressedTexture2D::8645940357922743702::1794009543::1794009749::1::::<><><>0<>0<>c81ac19445a1a31dd29e90a8616d7353<>res://.godot/imported/slime_body.png-0d515f9e912a0d42a36c28f828394f6a.ctex::
 slime_body_hurt.png::CompressedTexture2D::3723476765009385039::1794009543::1794009749::1::::<><><>0<>0<>e6e64a8ad38dfdd103f291be1b2f909e<>res://.godot/imported/slime_body_hurt.png-3f38b75e5ebee1f99a984b348a7e7f8b.ctex::
 slime_face.png::CompressedTexture2D::6595643196702037820::1794009543::1794009749::1::::<><><>0<>0<>295e0b177e30a68e666c8dbeb88fc227<>res://.godot/imported/slime_face.png-561a1f87b138570340118953f07aab21.ctex::
 slime_hurt_eyes.png::CompressedTexture2D::4791010527445338927::1794009543::1794009749::1::::<><><>0<>0<>ae8d21bff9037f535f86bd4e37c2edc1<>res://.godot/imported/slime_hurt_eyes.png-711256b4a2a47dcea723d274f00b4628.ctex::
 zigzag.gdshader::Shader::1641300446937215301::1794091452::0::1::::<><><>0<>0<><>::
+zigzagSlime.tscn::PackedScene::3980111490861190948::1794170976::0::1::::<><><>0<>0<><>::uid://c055juj57t86b::::res://characters/slime/slime.gd<>uid://cultj0uujqa6q::::res://Monsters_Creatures_Fantasy/Goblin/Take Hit.png<>uid://epdsidejcga1::::res://Monsters_Creatures_Fantasy/Goblin/Idle.png<>uid://cie6yf1thej8n::::res://Monsters_Creatures_Fantasy/Goblin/Run.png
 ::res://enemy_background_assets/::1794158158
 floor_tile.png::CompressedTexture2D::5951453032168810384::1794156928::1794156938::1::::<><><>0<>0<>8c1e24a01be5500d4b8adf3f52296e2f<>res://.godot/imported/floor_tile.png-52ec59140755dc2de867b0b966a2b3af.ctex::
+::res://Monsters Creatures Fantasy 2/::1794170856
+preview.png::CompressedTexture2D::726574480717654632::1794170771::1794170856::1::::<><><>0<>0<>8325f3bd31e6264d4c9b3fcfbb6c8725<>res://.godot/imported/preview.png-80a43aae5dfc062b3e7019fbf43fef13.ctex::
+::res://Monsters Creatures Fantasy 2/Bat/::1794170856
+attack.png::CompressedTexture2D::6877017335135217864::1794170771::1794170856::1::::<><><>0<>0<>78c4ee87c481b7b016f7dd30b5feed2f<>res://.godot/imported/attack.png-388e5d1878640f40ff7ccebf25eba65d.ctex::
+death.png::CompressedTexture2D::8926351622431017060::1794170771::1794170856::1::::<><><>0<>0<>3d8488ace6e66428faf2465c43e4adbf<>res://.godot/imported/death.png-8ea20b1b70305e0248bafd5878da69a9.ctex::
+fall.png::CompressedTexture2D::1830568048669260125::1794170771::1794170856::1::::<><><>0<>0<>61612aac68131f2d6a234f48e645ec83<>res://.godot/imported/fall.png-269beac6e18fec4936aba260294c882e.ctex::
+fly-to-fall.png::CompressedTexture2D::2835509188446970891::1794170771::1794170856::1::::<><><>0<>0<>0b6730373ec7ed021ea405a7b787b836<>res://.godot/imported/fly-to-fall.png-8d55852b2aa4eb7690dd21fee4924cf3.ctex::
+fly.png::CompressedTexture2D::5855369096414733406::1794170771::1794170856::1::::<><><>0<>0<>2f3ad45c4fdaaba152ed1c66fd998db4<>res://.godot/imported/fly.png-9210bc3a3abaabf0a2d1447775353e5f.ctex::
+hurt.png::CompressedTexture2D::5842441661340098777::1794170771::1794170856::1::::<><><>0<>0<>3d865234c35e29bbc03e7c015b4be9c4<>res://.godot/imported/hurt.png-22c94b07f55bc94924c0eb0a53489436.ctex::
+::res://Monsters Creatures Fantasy 2/Mimic/::1794170856
+attack_1.png::CompressedTexture2D::585746851453087129::1794170771::1794170856::1::::<><><>0<>0<>2a82f0391728e7fcd5da94386f47959f<>res://.godot/imported/attack_1.png-e25667d9f9b68a0da2b90256490478b6.ctex::
+attack_2.png::CompressedTexture2D::6794540542695924405::1794170771::1794170856::1::::<><><>0<>0<>a894291be022ade7a9531831a3d4c949<>res://.godot/imported/attack_2.png-5662b0bf1a778100af623c5ae57977b4.ctex::
+death.png::CompressedTexture2D::5095719735734999767::1794170771::1794170856::1::::<><><>0<>0<>f7504b58ecbe3e7e49975450173d8928<>res://.godot/imported/death.png-edae6a9cfa40bdd19978b39574f467f4.ctex::
+hurt.png::CompressedTexture2D::628222382079047230::1794170771::1794170856::1::::<><><>0<>0<>14c6144a9a5d24057379ffd037186e1c<>res://.godot/imported/hurt.png-367d9cf6dc2071aa0bb246a4e18a356c.ctex::
+Idle_closed.png::CompressedTexture2D::5449203589890700371::1794170771::1794170856::1::::<><><>0<>0<>70fa61933349a50d8d96bdb6cf9e5dd5<>res://.godot/imported/Idle_closed.png-255f6d74a372aab0ac9dcf1eda4ef400.ctex::
+idle_open.png::CompressedTexture2D::7284510963925043260::1794170771::1794170856::1::::<><><>0<>0<>52100393de2b6a340b5d7c703ee79931<>res://.godot/imported/idle_open.png-4f1c8d9f603866f7169c521445f2fb95.ctex::
+idle_transformed.png::CompressedTexture2D::4122913829218547084::1794170771::1794170856::1::::<><><>0<>0<>dceae96bf225ae14853f6adbf0fd9d12<>res://.godot/imported/idle_transformed.png-16aeeeb5103de56ae1844187ca39f2ea.ctex::
+opening.png::CompressedTexture2D::2311969283178261604::1794170771::1794170856::1::::<><><>0<>0<>735ffe6d9532ff28b378d893af41ce17<>res://.godot/imported/opening.png-71de9a67f2a1a6eabda6cb01330581f4.ctex::
+transform.png::CompressedTexture2D::2417640688505452433::1794170771::1794170856::1::::<><><>0<>0<>b81b5ba6991c116335ece9d90c2b7940<>res://.godot/imported/transform.png-3e505224125702bb6791b7010902c3c0.ctex::
+walk.png::CompressedTexture2D::3126141085035065294::1794170771::1794170856::1::::<><><>0<>0<>3167a9626647a34ac3a0b6549685f194<>res://.godot/imported/walk.png-836760ff791438e0fd8f0b777bfb3f7a.ctex::
+::res://Monsters Creatures Fantasy 2/Rat/::1794170856
+attack_bite.png::CompressedTexture2D::5873540012054091692::1794170771::1794170856::1::::<><><>0<>0<>9dddac20a0dcbd14b01550701957dc9b<>res://.godot/imported/attack_bite.png-1a30c27c2e6c558a45ce3f83bfb90e98.ctex::
+hurt.png::CompressedTexture2D::3772686488244657552::1794170771::1794170856::1::::<><><>0<>0<>2ba162d78505bccf1adef303f9e055f4<>res://.godot/imported/hurt.png-26eae770b5a8ff63027874889a1715af.ctex::
+idle.png::CompressedTexture2D::8436906287055803328::1794170771::1794170856::1::::<><><>0<>0<>19e12664e846ea71c75b2c8647dd0d78<>res://.godot/imported/idle.png-f1f6cf6183e9184c7ee42268af9ba1e1.ctex::
+rat-death.png::CompressedTexture2D::3219552172325693540::1794170771::1794170856::1::::<><><>0<>0<>3298c385902de57de3ff0bb685a772f2<>res://.godot/imported/rat-death.png-c764603733dbf54430250b2d3f624984.ctex::
+run.png::CompressedTexture2D::234662469047492501::1794170771::1794170856::1::::<><><>0<>0<>3e6727b9b18a2e87515673207e7c82d3<>res://.godot/imported/run.png-4ce4a12a37aa58d915ee5aeb2858151f.ctex::
+::res://Monsters Creatures Fantasy 2/Slime/::1794170856
+attack.png::CompressedTexture2D::2448810376670234719::1794170771::1794170856::1::::<><><>0<>0<>60a1f135eaede012171077e8a472edcd<>res://.godot/imported/attack.png-a75e7b6cdb5a29afaf0b6c22be356c26.ctex::
+death.png::CompressedTexture2D::8800004395296437452::1794170771::1794170856::1::::<><><>0<>0<>182e6ba508378bd15f8214b5632bf0c3<>res://.godot/imported/death.png-e01a56b0525c446fe1c44f0d66e1abc6.ctex::
+hurt.png::CompressedTexture2D::5572500361256254219::1794170771::1794170856::1::::<><><>0<>0<>b9a6f2541b0f350d45fb05203010fa3c<>res://.godot/imported/hurt.png-bbe269a205596e4163967b2ad3ec6b5e.ctex::
+idle.png::CompressedTexture2D::4390006930159939040::1794170771::1794170856::1::::<><><>0<>0<>4b15fa29a3a23e4dcea918b976eb5fdf<>res://.godot/imported/idle.png-cf1fc9cd752f79281986b85b4851935b.ctex::
+walk.png::CompressedTexture2D::3659490932675152603::1794170771::1794170856::1::::<><><>0<>0<>66e99948d4a3cb3a628c5dcdaa60090a<>res://.godot/imported/walk.png-647258c3890da26e335c58cc12f06b79.ctex::
+::res://Monsters_Creatures_Fantasy/::1794170856
+All Characters.png::CompressedTexture2D::2400635187080844572::1794170771::1794170856::1::::<><><>0<>0<>326a39cf41812a4ea6b4c898b3e3d8ff<>res://.godot/imported/All Characters.png-fbc53e80f3ba8fcb990f37a93841181e.ctex::
+::res://Monsters_Creatures_Fantasy/Flying eye/::1794170856
+Attack.png::CompressedTexture2D::6105562811235532663::1794170771::1794170856::1::::<><><>0<>0<>8ef3f62b5e7e587f4e8feb2410d66c6f<>res://.godot/imported/Attack.png-8540839ed55765b487f1d01034674e15.ctex::
+Death.png::CompressedTexture2D::2323031184307271331::1794170771::1794170855::1::::<><><>0<>0<>4be5af91b67534fecfb3e5c5bf6aba88<>res://.godot/imported/Death.png-a230331dd0304ca2e13a5f79386438cb.ctex::
+Flight.png::CompressedTexture2D::1194568736875400665::1794170771::1794170855::1::::<><><>0<>0<>7f48c70096651e23497a56d43b3ede2b<>res://.godot/imported/Flight.png-d405459fdb33af0bc026e3bd578c45f0.ctex::
+Take Hit.png::CompressedTexture2D::7184751119800002767::1794170771::1794170855::1::::<><><>0<>0<>1b09629a046a9493126fe108935f8519<>res://.godot/imported/Take Hit.png-456b67e838bddc9d22ab03f451b2ad02.ctex::
+::res://Monsters_Creatures_Fantasy/Goblin/::1794170856
+Attack.png::CompressedTexture2D::6545545121955513200::1794170771::1794170855::1::::<><><>0<>0<>11ce80f84d1ef73736394de243a4c571<>res://.godot/imported/Attack.png-08ce79bd8ed38b67f13bba850bfb38cc.ctex::
+Death.png::CompressedTexture2D::6376172566305067410::1794170771::1794170855::1::::<><><>0<>0<>b0f7d199ac0717688e4561e19c2f8b09<>res://.godot/imported/Death.png-7b01916bf19612806abad39afe922e16.ctex::
+Idle.png::CompressedTexture2D::311935761146682386::1794170771::1794170855::1::::<><><>0<>0<>92ce3f5ee676dc3705546ed01d66c8df<>res://.godot/imported/Idle.png-ffd6984ecf041c91159d7ba1cc52594c.ctex::
+Run.png::CompressedTexture2D::5344535016990639875::1794170771::1794170856::1::::<><><>0<>0<>cc4d2e3f2b42cf169a2dfcf3aa2ab6b9<>res://.godot/imported/Run.png-19051d2ee2911ee13b7f6db4a6c28b4a.ctex::
+Take Hit.png::CompressedTexture2D::6200497435350421566::1794170771::1794170856::1::::<><><>0<>0<>52268c98cb766f77c7b09679872ba62c<>res://.godot/imported/Take Hit.png-03aa7b1e76a1dc1c0808d41fbad7635d.ctex::
+::res://Monsters_Creatures_Fantasy/Mushroom/::1794170856
+Attack.png::CompressedTexture2D::2524996284471971684::1794170771::1794170856::1::::<><><>0<>0<>fef586a52bc82373c92a038878ab0dab<>res://.godot/imported/Attack.png-b6f872ce89bd9836d0fc8c3bfdd0e702.ctex::
+Death.png::CompressedTexture2D::7099500342371218548::1794170771::1794170856::1::::<><><>0<>0<>9b2e7166bbda9fcadd4197c552a884cc<>res://.godot/imported/Death.png-cc54445f7945e8d4625163d585fe7a8d.ctex::
+Idle.png::CompressedTexture2D::8637664419647194208::1794170771::1794170856::1::::<><><>0<>0<>cfe59a1c31d55dc9a493c6eb5623aae9<>res://.godot/imported/Idle.png-8c42707c74b0c6f5557d95ed13c60e6f.ctex::
+Run.png::CompressedTexture2D::7951919611905420924::1794170771::1794170856::1::::<><><>0<>0<>7f14ad42ecfe9a6dd54c2dcfc0d8b1f8<>res://.godot/imported/Run.png-f61b4113c3ec4fead4e0b8a29910aff3.ctex::
+Take Hit.png::CompressedTexture2D::97509462097811989::1794170771::1794170856::1::::<><><>0<>0<>6a2f1c238e8e3fa10feffbd6dbf4a80e<>res://.godot/imported/Take Hit.png-3634ecbdcf0ce476e88d567062559f20.ctex::
+::res://Monsters_Creatures_Fantasy/Skeleton/::1794170856
+Attack.png::CompressedTexture2D::3197170029971678463::1794170771::1794170856::1::::<><><>0<>0<>bb20952801a75e01f1a385872f1a4da2<>res://.godot/imported/Attack.png-695f90eab9cc6d1391607099dfcb7a35.ctex::
+Death.png::CompressedTexture2D::1012714839325795117::1794170771::1794170856::1::::<><><>0<>0<>a3960395ee3706097034b3f19e00e69a<>res://.godot/imported/Death.png-389db986aa33e506d904d2c89134bab4.ctex::
+Idle.png::CompressedTexture2D::5005413490548460897::1794170771::1794170856::1::::<><><>0<>0<>c124d86cc976e4b96ffd25953327ff62<>res://.godot/imported/Idle.png-cae30d6baeb4ae835a35ce0ce71df473.ctex::
+Shield.png::CompressedTexture2D::8388864474424107458::1794170771::1794170856::1::::<><><>0<>0<>7f9ef74ee1e67dd507ff51999fe1f99d<>res://.godot/imported/Shield.png-201c93c77a5aac0578cb914a714acf23.ctex::
+Take Hit.png::CompressedTexture2D::3110840058510276538::1794170771::1794170856::1::::<><><>0<>0<>a08645d171c49d950d19137d61ba26da<>res://.godot/imported/Take Hit.png-63372a6635834e8df2dba30d8053079c.ctex::
+Walk.png::CompressedTexture2D::4145842621780752859::1794170771::1794170856::1::::<><><>0<>0<>3d6a05d6972674b0102781e7ccc34343<>res://.godot/imported/Walk.png-0f57da5371116dfbb8a9604ce926ce18.ctex::
+::res://Monster_Creatures_Fantasy(Version 1.3)/::1794170771
+::res://Monster_Creatures_Fantasy(Version 1.3)/Flying eye/::1794170856
+Attack3.png::CompressedTexture2D::1395331870809696088::1794170771::1794170856::1::::<><><>0<>0<>681047f4fe317b5229d5e4e2390239c0<>res://.godot/imported/Attack3.png-6e6b47f55f8da9c4d3e40ac501099407.ctex::
+projectile_sprite.png::CompressedTexture2D::4118175074262558013::1794170771::1794170856::1::::<><><>0<>0<>7334a7e255630c6012a59a49be68eb31<>res://.godot/imported/projectile_sprite.png-45f99dcead5ac30d7cdab079e7a14ad9.ctex::
+::res://Monster_Creatures_Fantasy(Version 1.3)/Goblin/::1794170856
+Attack3.png::CompressedTexture2D::3688225741896479380::1794170771::1794170856::1::::<><><>0<>0<>3e437e5bf0e4dc8c3ec825163abd1230<>res://.godot/imported/Attack3.png-bcda3aeab9d0c177829546c9d45ae0f4.ctex::
+Bomb_sprite.png::CompressedTexture2D::732335398510742668::1794170771::1794170856::1::::<><><>0<>0<>65cec4396452dfa32ecc0d495f8d1711<>res://.godot/imported/Bomb_sprite.png-3442cb4b200310dfa05e8a7ff6e867ec.ctex::
+::res://Monster_Creatures_Fantasy(Version 1.3)/Mushroom/::1794170856
+Attack3.png::CompressedTexture2D::5463695945947044559::1794170771::1794170856::1::::<><><>0<>0<>d481d380e9bbab29f005a56788029cc2<>res://.godot/imported/Attack3.png-ebe8b819624d9c8e0409c4a31f64238a.ctex::
+Projectile_sprite.png::CompressedTexture2D::952830453420133284::1794170771::1794170856::1::::<><><>0<>0<>8302d23bc9cbeb904d6c5c7131e57c89<>res://.godot/imported/Projectile_sprite.png-aa901a4d52a54b91da2f8d2f75a0a609.ctex::
+::res://Monster_Creatures_Fantasy(Version 1.3)/Skeleton/::1794170856
+Attack3.png::CompressedTexture2D::6843115680239122859::1794170771::1794170856::1::::<><><>0<>0<>652909f86d769ca553c21b235075a1f9<>res://.godot/imported/Attack3.png-27b26b8c9d25f9365ffcdb44a94f6f3c.ctex::
+Sword_sprite.png::CompressedTexture2D::2065204156130310481::1794170771::1794170856::1::::<><><>0<>0<>f8d8a6099810986e610c4d787482e1e0<>res://.godot/imported/Sword_sprite.png-efb94cf292811966a0b07b6d336efd48.ctex::
 ::res://pistol/::1794158158
 pistol.png::CompressedTexture2D::6081771334990092076::1794009543::1794009749::1::::<><><>0<>0<>b85f4b3ee628cbc6450821901f9243a7<>res://.godot/imported/pistol.png-ccb9a9487ce225cdf094ad33c19c2ede.ctex::
 ::res://pistol/impact/::1794158158
@@ -58,9 +131,9 @@ impact.tscn::PackedScene::706737085132625066::1794009543::0::1::::<><><>0<>0<><>
 ::res://pistol/muzzle_flash/::1794158158
 muzzle_flash.gd::GDScript::4479662457787026327::1794009543::0::1::::<>Node2D<><>0<>0<><>::
 muzzle_flash.tscn::PackedScene::392939055719894999::1794009543::0::1::::<><><>0<>0<><>::uid://b428neo6pc13x::::res://pistol/muzzle_flash/muzzle_flash.gd<>uid://brgpjilf7s2ul::::res://pistol/muzzle_flash/muzzle_flash.png
-::res://smoke_explosion/::1794160667
+::res://smoke_explosion/::1794172752
 smoke_explosion.gd::GDScript::3631000237238128379::1794160667::0::1::::<>Node2D<><>0<>0<><>::
-smoke_explosion.gdshader::Shader::7466486084612881819::1794160638::0::1::::<><><>0<>0<><>::
+smoke_explosion.gdshader::Shader::7466486084612881819::1794172752::0::1::::<><><>0<>0<><>::
 smoke_explosion.tscn::PackedScene::7675803860678853612::1794009543::0::1::::<><><>0<>0<><>::uid://dem2612en1w8b::::res://smoke_explosion/smoke_explosion.gdshader<>uid://bry5bqginv35x::::res://smoke_explosion/smoke_explosion.gd
 ::res://trees/::1794160685
 tree.gd::GDScript::3963933228391369388::1794160685::0::1::::<>StaticBody2D<><>0<>0<><>::
