@@ -42,9 +42,20 @@ func _ready() -> void:
 	_create_countdown_label()
 	_update_spawn_rate()
 
+# The floor sprite only covers a bit more than the screen. It follows the
+# player in whole-tile steps, so the world looks endless and the tile pattern
+# stays fixed to the ground instead of sliding along with the camera.
+const FLOOR_TILE_WORLD_SIZE := 64.0 # 16px tile drawn at 4x
+func _update_floor() -> void:
+	var p: Vector2 = $Player.global_position
+	%Floor.global_position = (p / FLOOR_TILE_WORLD_SIZE).floor() * FLOOR_TILE_WORLD_SIZE
+
 func _process(delta: float) -> void:
+	_update_floor()
 	smoke_this_frame = 0
-	if time_left <= 0.0:
+	# Countdown freezes once the run is over (e.g. the player died), so the
+	# boss doesn't spawn over the Game Over screen
+	if time_left <= 0.0 or game_ended:
 		return
 	time_left = max(time_left - delta, 0.0)
 	_update_countdown_label()
@@ -134,16 +145,19 @@ func spawn_boss():
 func _on_boss_died():
 	_end_game(%WinScreen)
 
-# Shows the game-over or win screen. Whichever happens first wins, and any
-# open upgrade screen is closed so it can't unpause the game behind it.
-func _end_game(screen: CanvasLayer) -> void:
+# Ends the run and shows the game-over or win screen. Whichever happens first
+# wins, and any open upgrade screen is closed so it can't unpause the game
+# behind it. With show_screen = false the run ends but the screen is left for
+# later (player death shows it once the death animation finishes).
+func _end_game(screen: CanvasLayer, pause := true, show_screen := true) -> void:
 	if game_ended:
 		return
 	game_ended = true
 	pending_upgrades = 0
 	%UpgradeScreen.hide()
-	screen.show()
-	get_tree().paused = true
+	if show_screen:
+		screen.show()
+	get_tree().paused = pause
 
 func _on_timer_timeout():
 	if time_left <= 0.0:
@@ -152,8 +166,13 @@ func _on_timer_timeout():
 	_update_spawn_rate()
 
 
+# The game is not paused on death: enemies keep moving and spawning while the
+# death animation plays, and the Game Over screen appears once it's done.
 func _on_player_health_depleted():
-	_end_game(%GameOver)
+	_end_game(%GameOver, false, false)
+
+func _on_player_death_animation_finished():
+	%GameOver.show()
 
 func _on_mob_died():
 	xp.emit()
@@ -215,6 +234,16 @@ func get_attack_speed_multiplier() -> float:
 # Explode: damage = player damage; radius 150 at level 1, +50 per level
 func get_explosion_radius() -> float:
 	return 150.0 + 50.0 * (explode_level - 1)
+
+# Called by a lightning bolt when it reaches the enemy it was fired at. The
+# enemy may have died or been removed while the bolt was on its way.
+func apply_lightning_hit(body: Node) -> void:
+	if not is_instance_valid(body):
+		return
+	if body.has_method("apply_hit_effects"):
+		body.apply_hit_effects()
+	if body.has_method("take_damage"):
+		body.take_damage(damage)
 
 func explode_at(pos: Vector2) -> void:
 	damage_mobs_in_radius(pos, get_explosion_radius(), damage)

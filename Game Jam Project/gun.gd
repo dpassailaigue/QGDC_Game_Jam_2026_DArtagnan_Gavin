@@ -31,9 +31,11 @@ func shoot():
 		return
 	const BULLET = preload("res://bullet_2d.tscn")
 	var new_bullet = BULLET.instantiate()
-	# Fire from the player's center so enemies between the gun and the player still get hit
-	var origin := player.global_position
+	# Shots come out of the wizard's staff tip. The bullet also sweeps from the
+	# player's centre to the tip, so enemies hugging the player still get hit.
+	var origin: Vector2 = player.get_staff_tip_position()
 	var angle := origin.direction_to(target.global_position).angle()
+	new_bullet.sweep_from = player.global_position
 	player.get_parent().add_child(new_bullet)
 	new_bullet.global_position = origin
 	new_bullet.global_rotation = angle

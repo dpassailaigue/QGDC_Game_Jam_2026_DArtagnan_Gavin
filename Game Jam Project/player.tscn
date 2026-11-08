@@ -1,8 +1,175 @@
 [gd_scene format=3 uid="uid://dsw8raqgacxsc"]
 
 [ext_resource type="Script" uid="uid://bjpua3hfywlnl" path="res://player.gd" id="1_73bic"]
-[ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="2_bl5ih"]
 [ext_resource type="PackedScene" uid="uid://cphcr81upg72i" path="res://gun.tscn" id="3_bt0kc"]
+[ext_resource type="Texture2D" uid="uid://bqamqaqicjjvv" path="res://Wizard Pack/Idle.png" id="4_idle"]
+[ext_resource type="Texture2D" uid="uid://djsd16uyv23x4" path="res://Wizard Pack/Run.png" id="5_run"]
+[ext_resource type="Texture2D" uid="uid://s8qoa0gfyhqp" path="res://Wizard Pack/Death.png" id="6_death"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle0"]
+atlas = ExtResource("4_idle")
+region = Rect2(0, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle1"]
+atlas = ExtResource("4_idle")
+region = Rect2(231, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle2"]
+atlas = ExtResource("4_idle")
+region = Rect2(462, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle3"]
+atlas = ExtResource("4_idle")
+region = Rect2(693, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle4"]
+atlas = ExtResource("4_idle")
+region = Rect2(924, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idle5"]
+atlas = ExtResource("4_idle")
+region = Rect2(1155, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run0"]
+atlas = ExtResource("5_run")
+region = Rect2(0, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run1"]
+atlas = ExtResource("5_run")
+region = Rect2(231, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run2"]
+atlas = ExtResource("5_run")
+region = Rect2(462, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run3"]
+atlas = ExtResource("5_run")
+region = Rect2(693, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run4"]
+atlas = ExtResource("5_run")
+region = Rect2(924, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run5"]
+atlas = ExtResource("5_run")
+region = Rect2(1155, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run6"]
+atlas = ExtResource("5_run")
+region = Rect2(1386, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_run7"]
+atlas = ExtResource("5_run")
+region = Rect2(1617, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death0"]
+atlas = ExtResource("6_death")
+region = Rect2(0, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death1"]
+atlas = ExtResource("6_death")
+region = Rect2(231, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death2"]
+atlas = ExtResource("6_death")
+region = Rect2(462, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death3"]
+atlas = ExtResource("6_death")
+region = Rect2(693, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death4"]
+atlas = ExtResource("6_death")
+region = Rect2(924, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death5"]
+atlas = ExtResource("6_death")
+region = Rect2(1155, 0, 231, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_death6"]
+atlas = ExtResource("6_death")
+region = Rect2(1386, 0, 231, 190)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wizard"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idle5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_run7")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_death0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_death1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_death2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_death3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_death4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_death5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_death6")
+}],
+"loop": false,
+"name": &"death",
+"speed": 10.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_csncd"]
 size = Vector2(66, 38)
@@ -17,8 +184,14 @@ bg_color = Color(0.623529, 0.866667, 0.317647, 1)
 motion_mode = 1
 script = ExtResource("1_73bic")
 
-[node name="HappyBoo" parent="." unique_id=984748070 instance=ExtResource("2_bl5ih")]
+[node name="Wizard" type="AnimatedSprite2D" parent="." unique_id=984748070]
 unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(0, -67)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_wizard")
+animation = &"idle"
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2129353866]
 shape = SubResource("RectangleShape2D_csncd")
@@ -26,6 +199,7 @@ shape = SubResource("RectangleShape2D_csncd")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=473099899]
 
 [node name="Gun" parent="." unique_id=1561364329 instance=ExtResource("3_bt0kc")]
+unique_name_in_owner = true
 position = Vector2(0, -40)
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=698633368]
@@ -45,6 +219,8 @@ offset_top = -185.0
 offset_right = 87.0
 offset_bottom = -150.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_a5sny")
-value = 100.0
+max_value = 25.0
+value = 25.0
 show_percentage = false
 
+[connection signal="animation_finished" from="Wizard" to="." method="_on_wizard_animation_finished"]

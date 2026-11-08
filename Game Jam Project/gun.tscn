@@ -20,6 +20,7 @@ position = Vector2(62, 0)
 gizmo_extents = 47.7
 
 [node name="Pistol" type="Sprite2D" parent="WeaponPivot" unique_id=1241120187]
+visible = false
 texture = ExtResource("2_idur6")
 offset = Vector2(16, 0)
 

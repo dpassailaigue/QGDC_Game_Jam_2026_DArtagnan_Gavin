@@ -13,7 +13,7 @@ var dead := false
 
 # Boss settings (set is_boss before adding the mob to the scene)
 const BOSS_SCALE := 3.0
-const BOSS_HEALTH_MULTIPLIER := 10.0
+const BOSS_HEALTH_MULTIPLIER := 100.0
 const TREE_CRUSH_RADIUS := 150.0
 var is_boss := false
 

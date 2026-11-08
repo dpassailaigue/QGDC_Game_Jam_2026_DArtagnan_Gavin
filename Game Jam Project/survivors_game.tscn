@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dsgxioo8wstff" path="res://game.gd" id="1_qclsr"]
 [ext_resource type="PackedScene" uid="uid://dsw8raqgacxsc" path="res://player.tscn" id="2_a7q7f"]
-[ext_resource type="PackedScene" uid="uid://c2qg1nuvfnd4q" path="res://trees/pine_tree.tscn" id="3_6h7ij"]
+[ext_resource type="PackedScene" uid="uid://c2qg1nuvfnd4q" path="res://trees/tree.tscn" id="3_6h7ij"]
+[ext_resource type="Texture2D" uid="uid://cq16tdt1eo2k7" path="res://enemy_background_assets/floor_tile.png" id="4_floor"]
 
 [sub_resource type="Curve2D" id="Curve2D_cp6e5"]
 _data = {
@@ -203,15 +204,16 @@ offset_bottom = 270.0
 text = "UPGRADES"
 label_settings = SubResource("LabelSettings_cobfd")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1066809076]
-layer = -32
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=980385255]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Floor" type="Sprite2D" parent="." unique_id=980385255]
+unique_name_in_owner = true
+z_index = -100
+z_as_relative = false
+texture_filter = 1
+texture_repeat = 2
+scale = Vector2(4, 4)
+texture = ExtResource("4_floor")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 384)
 
 [node name="PineTree" parent="." unique_id=1536469701 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(66, 591)
@@ -246,10 +248,20 @@ position = Vector2(-346, -355)
 [node name="PineTree10" parent="." unique_id=1043826134 groups=["environment"] instance=ExtResource("3_6h7ij")]
 position = Vector2(-573, -231)
 
+[node name="PineTree12" parent="." unique_id=1720453118 groups=["environment"] instance=ExtResource("3_6h7ij")]
+position = Vector2(220, -600)
+
+[node name="PineTree13" parent="." unique_id=1836027741 groups=["environment"] instance=ExtResource("3_6h7ij")]
+position = Vector2(-430, 640)
+
+[node name="PineTree14" parent="." unique_id=1309562284 groups=["environment"] instance=ExtResource("3_6h7ij")]
+position = Vector2(560, 660)
+
 [connection signal="upgrade_select" from="." to="Player" method="_on_game_upgrade_select"]
 [connection signal="xp" from="." to="Player" method="_on_game_xp"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
 [connection signal="upgraded" from="Player" to="." method="_on_player_upgraded"]
+[connection signal="death_animation_finished" from="Player" to="." method="_on_player_death_animation_finished"]
 [connection signal="pressed" from="GameOver/ColorRect/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="WinScreen/ColorRect/BackToMenuButton" to="." method="_on_main_menu_button_pressed"]

@@ -14,6 +14,18 @@ var travelled_distance = 0
 # that later get freed can hang or crash Godot when it's read again.
 var hit_ids := {}
 var ray_exclude: Array[RID] = []
+# Set by the gun: the bullet spawns at the staff tip, so on its first frame it
+# also checks the gap between the player's centre and the tip for enemies
+var sweep_from = null
+
+# The bullet itself is invisible and only finds what gets hit, almost
+# instantly. What you see is a lightning bolt per link (staff -> enemy, then
+# enemy -> enemy for each chain), each launching when the previous one lands.
+# Damage is dealt by the bolt when it reaches its enemy.
+const LIGHTNING_BOLT = preload("res://lightning_bolt.tscn")
+var link_start = null # where the current link's bolt starts (set on 1st frame)
+var prev_bolt = null # the previous link's bolt; the next one launches when it lands
+var link_source = null # what the current link's bolt comes from (player, then enemies)
 
 @onready var game = get_node("/root/Game")
 @onready var player = get_node("/root/Game/Player")
@@ -23,6 +35,16 @@ func _ready():
 	ray_exclude.append(player.get_rid())
 
 func _physics_process(delta):
+	if link_start == null:
+		link_start = global_position # the staff tip
+	if sweep_from != null:
+		var close_hit = _sweep(sweep_from, global_position)
+		sweep_from = null
+		if close_hit:
+			global_position = close_hit.position
+			_hit(close_hit.collider)
+			return
+
 	var motion = Vector2.RIGHT.rotated(rotation) * SPEED * delta
 
 	# The bullet moves ~170px per frame, so it can jump clean over an enemy
@@ -36,6 +58,10 @@ func _physics_process(delta):
 	position += motion
 	travelled_distance += SPEED * delta
 	if travelled_distance > RANGE:
+		# Missed everything: the bolt fizzles out where the shot ended. After a
+		# hit with no enemy left to chain to, the lightning just ends there.
+		if hit_ids.is_empty():
+			_spawn_bolt(null)
 		queue_free()
 
 func _sweep(from: Vector2, to: Vector2) -> Dictionary:
@@ -67,12 +93,25 @@ func _hit(body):
 		return
 	hit_ids[body.get_instance_id()] = true
 	ray_exclude.append(body.get_rid())
+	# The bolt for this link deals the damage when it visually lands
+	_spawn_bolt(body)
 	chain -= 1
 	if chain <= 0:
 		queue_free()
 	else:
 		find_enemy()
-	if body.has_method("apply_hit_effects"):
-		body.apply_hit_effects()
-	if body.has_method("take_damage"):
-		body.take_damage(game.damage)
+
+# Bolt from the current link's start to here; the next link starts here
+func _spawn_bolt(target: Node) -> void:
+	if link_start == null:
+		link_start = global_position
+	if prev_bolt == null:
+		link_source = player # first link comes out of the staff
+	var bolt = LIGHTNING_BOLT.instantiate()
+	game.add_child(bolt)
+	# A previous enemy that's already gone just leaves the start where it was
+	var source = link_source if is_instance_valid(link_source) else null
+	bolt.setup(link_start, global_position, target, prev_bolt, source)
+	link_start = global_position
+	link_source = target
+	prev_bolt = bolt

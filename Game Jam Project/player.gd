@@ -2,8 +2,10 @@ extends CharacterBody2D
 
 signal health_depleted
 signal upgraded
+signal death_animation_finished # the Game Over screen waits for this
 
-var health = 100.0
+var health = 25.0
+var dead := false
 # Level-up curve: XP needed for the next level grows by a fixed step, capped.
 # Spawns per minute are constant (~330), so XP supply doesn't grow over the
 # run; what grows is the player's kill power. A linear step with a cap keeps
@@ -71,16 +73,25 @@ func _update_xp_bar():
 	xp_bar_fill.set_anchor_and_offset(SIDE_RIGHT, clampf(progress, 0.0, 1.0), 0.0)
 
 func _physics_process(delta):
+	# Dead: no more input, movement or damage; the death animation plays out
+	# while the rest of the game keeps running around the body
+	if dead:
+		return
+
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = direction * speed
 
 	move_and_slide()
-	
+
 	if velocity.length() > 0.0:
-		%HappyBoo.play_walk_animation()
+		%Wizard.play("run")
+		# The sprite sheets face right; flip when moving left, and keep the
+		# last facing when moving straight up/down
+		if velocity.x != 0.0:
+			%Wizard.flip_h = velocity.x < 0.0
 	else:
-		%HappyBoo.play_idle_animation()
-	
+		%Wizard.play("idle")
+
 	# Taking damage
 	const DAMAGE_RATE = 6.0
 	var overlapping_mobs = %HurtBox.get_overlapping_bodies()
@@ -88,10 +99,46 @@ func _physics_process(delta):
 		take_damage(DAMAGE_RATE * overlapping_mobs.size() * delta)
 
 func take_damage(amount: float):
+	if dead:
+		return
 	health -= amount
 	%HealthBar.value = health
 	if health <= 0.0:
-		health_depleted.emit()
+		die()
+
+func die():
+	dead = true
+	velocity = Vector2.ZERO
+	%HealthBar.hide()
+	# Stop shooting: the gun's process and fire timer are both paused
+	%Gun.process_mode = Node.PROCESS_MODE_DISABLED
+	%Gun.hide()
+	%Wizard.play("death")
+	health_depleted.emit()
+
+# Glowing tip of the staff in each animation frame, in sprite sheet pixels
+# (measured from Wizard Pack/Idle.png and Run.png; frames are 231x190)
+const WIZARD_FRAME_SIZE := Vector2(231, 190)
+const STAFF_TIP_IDLE := Vector2(87, 60) # same in every idle frame
+const STAFF_TIP_RUN := [
+	Vector2(143, 72), Vector2(142, 72), Vector2(139, 72), Vector2(137, 68),
+	Vector2(134, 68), Vector2(137, 70), Vector2(138, 70), Vector2(139, 66),
+]
+
+# World position of the staff tip right now, following the current frame,
+# the sprite's scale/offset and which way the wizard is facing
+func get_staff_tip_position() -> Vector2:
+	var tip := STAFF_TIP_IDLE
+	if %Wizard.animation == "run":
+		tip = STAFF_TIP_RUN[%Wizard.frame]
+	var local := tip - WIZARD_FRAME_SIZE / 2.0 # sprite is centred
+	if %Wizard.flip_h:
+		local.x = -local.x
+	return %Wizard.to_global(local)
+
+func _on_wizard_animation_finished():
+	if %Wizard.animation == "death":
+		death_animation_finished.emit()
 
 func upgrade():
 	level += 1

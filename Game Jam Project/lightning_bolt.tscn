@@ -1,0 +1,68 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://lightning_bolt.gd" id="1_bolt"]
+[ext_resource type="Texture2D" uid="uid://c5370r4lf6w6m" path="res://Wizard Pack/lightning_v2_1.png" id="f1"]
+[ext_resource type="Texture2D" uid="uid://dff543cddsd8y" path="res://Wizard Pack/lightning_v2_3.png" id="f3"]
+[ext_resource type="Texture2D" uid="uid://4u1mhx54g27n" path="res://Wizard Pack/lightning_v2_4.png" id="f4"]
+[ext_resource type="Texture2D" uid="uid://ve8kta5yqg8u" path="res://Wizard Pack/lightning_v2_5.png" id="f5"]
+[ext_resource type="Texture2D" uid="uid://tmxey6y7iu3k" path="res://Wizard Pack/lightning_v2_6.png" id="f6"]
+[ext_resource type="Texture2D" uid="uid://cumtcvi87p4wp" path="res://Wizard Pack/lightning_v2_7.png" id="f7"]
+[ext_resource type="Texture2D" uid="uid://dc3yjgsjw7f76" path="res://Wizard Pack/lightning_v2_8.png" id="f8"]
+[ext_resource type="Texture2D" uid="uid://6p5cqbw7jt8l" path="res://Wizard Pack/lightning_v2_9.png" id="f9"]
+[ext_resource type="Texture2D" uid="uid://y4gcgeitwfwn" path="res://Wizard Pack/lightning_v2_11.png" id="f11"]
+[ext_resource type="Texture2D" uid="uid://bkx6rnot62e1k" path="res://Wizard Pack/lightning_v2_12.png" id="f12"]
+[ext_resource type="Texture2D" uid="uid://7r87ey465mt2" path="res://Wizard Pack/lightning_v2_13.png" id="f13"]
+[ext_resource type="Texture2D" uid="uid://c53u7hvah0b18" path="res://Wizard Pack/lightning_v2_2.png" id="f2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bolt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("f1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("f2")
+}],
+"loop": false,
+"name": &"bolt",
+"speed": 30.0
+}]
+
+[node name="LightningBolt" type="AnimatedSprite2D"]
+z_index = 10
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_bolt")
+animation = &"bolt"
+centered = false
+offset = Vector2(0, -11)
+script = ExtResource("1_bolt")
