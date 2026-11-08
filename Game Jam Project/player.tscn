@@ -13,10 +13,6 @@ size = Vector2(84, 54)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a5sny"]
 bg_color = Color(0.623529, 0.866667, 0.317647, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_cobfd"]
-font_size = 48
-font_color = Color(0, 0, 0, 1)
-
 [node name="Player" type="CharacterBody2D" unique_id=1546396198]
 motion_mode = 1
 script = ExtResource("1_73bic")
@@ -52,11 +48,3 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_a5sny")
 value = 100.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="." unique_id=313586617]
-unique_name_in_owner = true
-offset_left = 752.0
-offset_top = 446.0
-offset_right = 933.0
-offset_bottom = 512.0
-text = "Test"
-label_settings = SubResource("LabelSettings_cobfd")

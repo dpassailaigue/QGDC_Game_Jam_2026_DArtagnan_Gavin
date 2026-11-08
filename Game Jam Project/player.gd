@@ -16,11 +16,59 @@ const MAX_LEVEL_XP := 140
 var xp = 0
 var level = 1
 var upgrade_need = FIRST_LEVEL_XP # total XP at which the next level-up happens
+var level_start_xp = 0 # total XP when the current level began
+
+# XP bar along the bottom of the screen
+const XP_BAR_HEIGHT := 10.0
+const XP_BAR_WIDTH_RATIO := 0.6 # fraction of the screen width, centred
+const XP_BAR_BOTTOM_MARGIN := 40.0 # gap between the bar and the bottom edge
+const XP_BAR_BACK_COLOR := Color(0.5, 0.5, 0.5, 0.5) # grey, slightly see-through
+const XP_BAR_FILL_COLOR := Color(0.55, 0.85, 1.0, 1.0) # light blue, opaque
+var xp_bar_fill: ColorRect
 
 var speed = 600.0
 
 func _ready():
-	%Label.text = str(xp)
+	_create_xp_bar()
+
+func _create_xp_bar():
+	var layer := CanvasLayer.new()
+	add_child(layer)
+	var back := ColorRect.new()
+	back.color = XP_BAR_BACK_COLOR
+	back.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Centred horizontally (the camera follows the player, so this is centred
+	# under the player), raised slightly off the bottom edge
+	var half_width := (1.0 - XP_BAR_WIDTH_RATIO) / 2.0
+	back.anchor_left = half_width
+	back.anchor_right = 1.0 - half_width
+	back.anchor_top = 1.0
+	back.anchor_bottom = 1.0
+	back.offset_left = 0.0
+	back.offset_right = 0.0
+	back.offset_top = -XP_BAR_BOTTOM_MARGIN - XP_BAR_HEIGHT
+	back.offset_bottom = -XP_BAR_BOTTOM_MARGIN
+	layer.add_child(back)
+	xp_bar_fill = ColorRect.new()
+	xp_bar_fill.color = XP_BAR_FILL_COLOR
+	xp_bar_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Fills the back bar from the left; anchor_right is the progress (0 to 1)
+	xp_bar_fill.anchor_left = 0.0
+	xp_bar_fill.anchor_top = 0.0
+	xp_bar_fill.anchor_bottom = 1.0
+	xp_bar_fill.offset_left = 0.0
+	xp_bar_fill.offset_top = 0.0
+	xp_bar_fill.offset_right = 0.0
+	xp_bar_fill.offset_bottom = 0.0
+	back.add_child(xp_bar_fill)
+	_update_xp_bar()
+
+# Fill = progress from the start of this level to the next level-up
+func _update_xp_bar():
+	var progress := float(xp - level_start_xp) / float(upgrade_need - level_start_xp)
+	# Set anchor and offset together; setting the anchor alone makes Godot shift
+	# the offset to keep the old width
+	xp_bar_fill.set_anchor_and_offset(SIDE_RIGHT, clampf(progress, 0.0, 1.0), 0.0)
 
 func _physics_process(delta):
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -47,6 +95,7 @@ func take_damage(amount: float):
 
 func upgrade():
 	level += 1
+	level_start_xp = upgrade_need
 	upgrade_need += xp_for_level(level)
 	upgraded.emit()
 
@@ -56,9 +105,9 @@ func xp_for_level(target_level: int) -> int:
 
 func _on_game_xp() -> void:
 	xp += 1
-	%Label.text = str(xp) # only redraw the XP label when it changes
 	if xp >= upgrade_need:
 		upgrade()
+	_update_xp_bar()
 
 
 func _on_game_upgrade_select(upgrade_name: String) -> void:
