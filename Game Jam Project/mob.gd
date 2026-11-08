@@ -10,18 +10,8 @@ const SLOW_COLOR := Color(0.55, 0.75, 1.0)
 var speed = randf_range(200, 300)
 var health = 3.0
 var dead := false
-
-# Boss settings (set is_boss before adding the mob to the scene)
-const BOSS_SCALE := 3.0
-const BOSS_HEALTH_MULTIPLIER := 100.0
-const TREE_CRUSH_RADIUS := 150.0
-var is_boss := false
-
-# Empowered settings (set is_empowered before adding the mob to the scene)
-const EMPOWERED_SCALE := 1.25
-const EMPOWERED_HEALTH_MULTIPLIER := 3.0
-const EMPOWERED_COLOR := Color(0.7, 0.55, 0.05) # dark yellow
-var is_empowered := false
+# The boss (boss.tscn/boss.gd) and the stronger enemy (big_mob.tscn/big_mob.gd)
+# are their own scenes now.
 
 # Status effects
 var burn_time_left := 0.0
@@ -31,37 +21,27 @@ var slow_time_left := 0.0
 
 @onready var player = get_node("/root/Game/Player")
 @onready var game = get_node("/root/Game")
-@onready var slime = %Slime # cached: looked up every frame otherwise
+@onready var slime = _find_slime() # cached: looked up every frame otherwise
 
 # Tint when no status effect is active (mob variants set their own colour)
 @export var default_color := Color.WHITE
 
 
+# The slime visual this enemy animates. Variants with a different visual
+# (e.g. big_mob's BigSlime) override this.
+func _find_slime() -> Node2D:
+	return %Slime
+
+
 func _ready():
 	add_to_group("mobs")
 	slime.play_walk()
-	if is_empowered:
-		health *= EMPOWERED_HEALTH_MULTIPLIER
-		default_color = EMPOWERED_COLOR
-		slime.scale *= EMPOWERED_SCALE
-		$CollisionShape2D.scale *= EMPOWERED_SCALE
-		$CollisionShape2D.position *= EMPOWERED_SCALE
-	if is_boss:
-		health *= BOSS_HEALTH_MULTIPLIER
-		slime.scale *= BOSS_SCALE
-		$CollisionShape2D.scale *= BOSS_SCALE
-		$CollisionShape2D.position *= BOSS_SCALE
-		# Walk straight through trees (they get crushed instead)
-		for tree in get_tree().get_nodes_in_group("environment"):
-			add_collision_exception_with(tree)
 
 
 func _physics_process(delta):
 	_process_status_effects(delta)
 	if dead:
 		return
-	if is_boss:
-		_crush_nearby_trees()
 
 	var current_speed = speed
 	if slow_time_left > 0.0:
@@ -73,15 +53,6 @@ func _physics_process(delta):
 # Walk straight at the player. Mob variants override this for other movement.
 func _get_move_direction() -> Vector2:
 	return global_position.direction_to(player.global_position)
-
-
-func _crush_nearby_trees():
-	for tree in get_tree().get_nodes_in_group("environment"):
-		if tree.is_queued_for_deletion():
-			continue
-		if global_position.distance_to(tree.global_position) <= TREE_CRUSH_RADIUS:
-			_spawn_smoke(tree.global_position)
-			tree.queue_free()
 
 
 func _spawn_smoke(pos: Vector2):

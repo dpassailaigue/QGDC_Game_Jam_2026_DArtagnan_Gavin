@@ -145,7 +145,9 @@ func _execute_aoe():
 	var distance = global_position.distance_to(player.global_position)
 
 	if distance <= AOE_RADIUS:
-		player.health -= AOE_DAMAGE
+		# take_damage (not health -=) so the health bar updates and the
+		# player actually dies if this finishes them off
+		player.take_damage(AOE_DAMAGE)
 
 	_spawn_smoke(global_position)
 

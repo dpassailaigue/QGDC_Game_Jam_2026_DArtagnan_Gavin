@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dt3cb7jvjkdun"]
 
 [ext_resource type="Script" uid="uid://c055juj57t86b" path="res://characters/slime/slime.gd" id="1_g8egj"]
-[ext_resource type="Texture2D" uid="uid://b7rhtttevhxtj" path="res://characters/ground_shadow.png" id="2_h6qjn"]
 [ext_resource type="Texture2D" uid="uid://dvgfmy6vtvjji" path="res://characters/slime/slime_body.png" id="3_3rknm"]
 [ext_resource type="Texture2D" uid="uid://btbxea1f3vwot" path="res://characters/slime/slime_body_hurt.png" id="4_cwc25"]
 [ext_resource type="Texture2D" uid="uid://c078jrp2yvc4s" path="res://characters/slime/slime_face.png" id="5_knfjv"]
@@ -213,13 +212,6 @@ _data = {
 
 [node name="BigSlime" type="Node2D" unique_id=972096811]
 script = ExtResource("1_g8egj")
-
-[node name="GroundShadow" type="Sprite2D" parent="." unique_id=2116837093]
-modulate = Color(0.898039, 0.878431, 0.831373, 1)
-z_index = -1
-z_as_relative = false
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("2_h6qjn")
 
 [node name="Anchor" type="Marker2D" parent="." unique_id=1733491898]
 
