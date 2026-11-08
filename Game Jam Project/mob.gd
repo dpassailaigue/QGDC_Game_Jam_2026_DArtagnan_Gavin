@@ -42,7 +42,7 @@ func _physics_process(delta):
 	_process_status_effects(delta)
 	if dead:
 		return
-
+	
 	var current_speed = speed
 	if slow_time_left > 0.0:
 		current_speed *= SLOW_MULTIPLIER
